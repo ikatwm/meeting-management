@@ -1,0 +1,118 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Position {
+  id    Int    @id @default(autoincrement())
+  name  String @unique @db.VarChar(255)
+  users User[]
+
+  @@map("positions")
+}
+
+model User {
+  id                    Int                    @id @default(autoincrement())
+  name                  String                 @db.VarChar(255)
+  email                 String                 @unique @db.VarChar(255)
+  role                  String                 @db.VarChar(50) // hr/manager/staff
+  passwordHash          String                 @map("password_hash") @db.VarChar(255)
+  lastLogin             DateTime?              @map("last_login")
+  positionId            Int?                   @map("position_id")
+  position              Position?              @relation(fields: [positionId], references: [id], onDelete: SetNull)
+  meetings              Meeting[]              @relation("MeetingOrganizer")
+  interviewParticipants InterviewParticipant[]
+
+  @@index([email])
+  @@index([positionId])
+  @@map("users")
+}
+
+model AppliedPosition {
+  id         Int         @id @default(autoincrement())
+  name       String      @unique @db.VarChar(255)
+  candidates Candidate[]
+
+  @@map("applied_positions")
+}
+
+model Candidate {
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(255)
+  email             String              @unique @db.VarChar(255)
+  appliedPositionId Int                 @map("applied_position_id")
+  status            String              @db.VarChar(50) // e.g., applied, screening, interview, offer, rejected
+  interviewNotes    String?             @map("interview_notes") @db.Text
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime            @updatedAt @map("updated_at")
+  appliedPosition   AppliedPosition     @relation(fields: [appliedPositionId], references: [id], onDelete: Restrict)
+  meetings          Meeting[]
+  candidateHistories CandidateHistory[]
+
+  @@index([email])
+  @@index([appliedPositionId])
+  @@index([status])
+  @@map("candidates")
+}
+
+model Meeting {
+  id                    Int                    @id @default(autoincrement())
+  title                 String                 @db.VarChar(255)
+  startTime             DateTime               @map("start_time")
+  endTime               DateTime               @map("end_time")
+  location              String?                @db.VarChar(255)
+  meetingType           String                 @map("meeting_type") @db.VarChar(50) // onsite/zoom/google_meet
+  notes                 String?                @db.Text
+  status                String                 @db.VarChar(50) // confirmed/pending
+  userId                Int                    @map("user_id")
+  candidateId           Int?                   @map("candidate_id")
+  createdAt             DateTime               @default(now()) @map("created_at")
+  updatedAt             DateTime               @updatedAt @map("updated_at")
+  deletedAt             DateTime?              @map("deleted_at")
+  user                  User                   @relation("MeetingOrganizer", fields: [userId], references: [id], onDelete: Restrict)
+  candidate             Candidate?             @relation(fields: [candidateId], references: [id], onDelete: SetNull)
+  interviewParticipants InterviewParticipant[]
+  candidateHistories    CandidateHistory[]
+
+  @@index([userId])
+  @@index([candidateId])
+  @@index([status])
+  @@index([startTime])
+  @@index([deletedAt])
+  @@map("meetings")
+}
+
+model InterviewParticipant {
+  id        Int     @id @default(autoincrement())
+  meetingId Int     @map("meeting_id")
+  userId    Int     @map("user_id")
+  meeting   Meeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([meetingId, userId])
+  @@index([meetingId])
+  @@index([userId])
+  @@map("interview_participants")
+}
+
+model CandidateHistory {
+  id          Int       @id @default(autoincrement())
+  candidateId Int       @map("candidate_id")
+  meetingId   Int?      @map("meeting_id")
+  feedback    String    @db.Text
+  recordedAt  DateTime  @default(now()) @map("recorded_at")
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  meeting     Meeting?  @relation(fields: [meetingId], references: [id], onDelete: SetNull)
+
+  @@index([candidateId])
+  @@index([meetingId])
+  @@index([recordedAt])
+  @@map("candidate_histories")
+}

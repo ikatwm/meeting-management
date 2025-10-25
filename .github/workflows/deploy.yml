@@ -1,0 +1,183 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual deployment
+
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: 'latest'
+
+jobs:
+  # Deploy Frontend to Vercel
+  deploy-frontend:
+    name: Deploy Frontend to Vercel
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: ${{ steps.vercel-deploy.outputs.url }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install Vercel CLI
+        run: pnpm install -g vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.PRODUCTION_API_URL }}
+
+      - name: Deploy to Vercel
+        id: vercel-deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$url" >> $GITHUB_OUTPUT
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Comment PR with deployment URL
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Frontend deployed to: ${{ steps.vercel-deploy.outputs.url }}'
+            })
+
+  # Deploy Backend - Choose your platform
+  deploy-backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production-backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        run: cd apps/backend && pnpm prisma generate
+
+      - name: Build Backend
+        run: pnpm nx build backend --prod
+
+      - name: Run Tests
+        run: pnpm nx test backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+      # OPTION 1: Deploy to Render.com (uncomment to use)
+      - name: Deploy to Render
+        run: |
+         curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
+           -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+           -H "Content-Type: application/json" \
+           -d '{"clearCache": false}'
+
+      # OPTION 2: Deploy to Railway (uncomment to use)
+      # - name: Install Railway CLI
+      #   run: npm install -g @railway/cli
+      #
+      # - name: Deploy to Railway
+      #   run: railway up --service backend
+      #   env:
+      #     RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      # OPTION 3: Deploy to Fly.io (uncomment to use)
+      # - name: Setup Flyctl
+      #   uses: superfly/flyctl-actions/setup-flyctl@master
+      #
+      # - name: Deploy to Fly.io
+      #   run: flyctl deploy --remote-only --config apps/backend/fly.toml
+      #   env:
+      #     FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      # OPTION 4: Deploy via Docker to any platform
+      # - name: Build and Push Docker Image
+      #   run: |
+      #     docker build -t your-registry/meeting-manager-backend:${{ github.sha }} -f apps/backend/Dockerfile .
+      #     docker push your-registry/meeting-manager-backend:${{ github.sha }}
+
+      - name: Deployment Status
+        run: |
+          echo "========================================="
+          echo "Backend Build Completed Successfully!"
+          echo "========================================="
+          echo ""
+          echo "To deploy backend, uncomment ONE of the deployment options above:"
+          echo "  - Render.com (OPTION 1)"
+#          echo "  - Railway (OPTION 2)"
+#          echo "  - Fly.io (OPTION 3)"
+#          echo "  - Docker (OPTION 4)"
+          echo ""
+          echo "Add required secrets to GitHub:"
+          echo "  Settings → Secrets → Actions"
+          echo "========================================="
+
+  # Deployment success notification
+  deployment-complete:
+    name: Deployment Complete
+    runs-on: ubuntu-latest
+    needs: [deploy-frontend, deploy-backend]
+    if: always()
+
+    steps:
+      - name: Check Deployment Status
+        run: |
+          echo "========================================="
+          echo "📦 DEPLOYMENT SUMMARY"
+          echo "========================================="
+          echo ""
+          echo "Frontend: ${{ needs.deploy-frontend.result }}"
+          echo "Backend:  ${{ needs.deploy-backend.result }}"
+          echo ""
+          if [[ "${{ needs.deploy-frontend.result }}" == "success" && "${{ needs.deploy-backend.result }}" == "success" ]]; then
+            echo "✅ All deployments completed successfully!"
+          else
+            echo "⚠️  Some deployments failed. Check logs above."
+          fi
+          echo "========================================="
