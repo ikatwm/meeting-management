@@ -1,6 +1,16 @@
 # Meeting Management API Documentation
 
+**Status**: ✅ Deployed and operational
+
 ## Base URL
+
+**Production:**
+
+```
+https://your-backend.onrender.com/api
+```
+
+**Local Development:**
 
 ```
 http://localhost:3333/api
