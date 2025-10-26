@@ -31,11 +31,22 @@ jobs:
               - 'apps/frontend/**'
               - 'package.json'
               - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - '.npmrc'
+              - 'nx.json'
+              - 'tsconfig.base.json'
+              - 'tsconfig.json'
               - '.github/workflows/deploy.yml'
             backend:
               - 'apps/backend/**'
               - 'package.json'
               - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - '.npmrc'
+              - 'nx.json'
+              - 'tsconfig.base.json'
+              - 'tsconfig.json'
+              - 'apps/backend/Dockerfile'
               - '.github/workflows/deploy.yml'
 
   # Deploy Frontend to Vercel
