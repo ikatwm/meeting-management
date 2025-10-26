@@ -4,7 +4,6 @@
   "framework": "nextjs",
   "build": {
     "env": {
-      "NEXT_PUBLIC_API_URL": "",
       "NX_SKIP_NX_CACHE": "true"
     }
   },
