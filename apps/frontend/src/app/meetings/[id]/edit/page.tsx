@@ -59,7 +59,7 @@ export default function EditMeetingPage() {
         title: data.title,
         startTime: format(new Date(data.startTime), "yyyy-MM-dd'T'HH:mm"),
         endTime: format(new Date(data.endTime), "yyyy-MM-dd'T'HH:mm"),
-        location: data.location,
+        location: data.location || '',
         meetingType: data.meetingType,
         status: data.status,
         notes: data.notes || '',
