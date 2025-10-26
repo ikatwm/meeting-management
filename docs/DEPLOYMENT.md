@@ -153,7 +153,9 @@ Get these from:
    - Environment: Docker
    - Region: Same as database
    - Branch: main
+   - Root Directory: `.` (leave blank or set to root)
    - Dockerfile Path: `apps/backend/Dockerfile`
+   - Docker Build Context Directory: `.` (monorepo root - very important!)
    - Plan: Free or Starter
 
 4. **Set Environment Variables**
@@ -167,18 +169,18 @@ NODE_ENV=production
 PORT=3333
 ```
 
-5. **Add Build Command** (in Render settings)
-
-```bash
-cd ../.. && docker build -f apps/backend/Dockerfile -t backend .
-```
-
-6. **Deploy**
+5. **Deploy**
 
    - Click "Create Web Service"
-   - Wait for deployment to complete
+   - Wait for deployment to complete (Render will automatically build using Docker)
 
-7. **Run Migrations**
+6. **Verify Deployment**
+
+   - Check deployment logs in Render dashboard
+   - Verify health endpoint: `https://your-backend.onrender.com/health`
+   - Migrations run automatically via the Dockerfile startup script
+
+7. **Optional: Manual Migrations** (if needed)
    - Go to Shell tab in Render dashboard
    - Run: `pnpm prisma migrate deploy`
 

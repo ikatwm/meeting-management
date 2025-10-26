@@ -83,9 +83,10 @@ docker compose down -v
    - Name: `meeting-backend`
    - Region: Same as database
    - Branch: `main`
-   - Root Directory: `apps/backend`
+   - Root Directory: `.` (leave blank or set to root)
    - Environment: `Docker`
    - Dockerfile Path: `apps/backend/Dockerfile`
+   - Docker Build Context Directory: `.` (monorepo root)
    - Instance Type: Free (or paid for production)
 4. Add Environment Variables:
    ```
