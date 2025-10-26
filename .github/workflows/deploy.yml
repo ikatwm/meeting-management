@@ -144,7 +144,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Build Backend
-        run: pnpm nx build backend --prod
+        run: pnpm nx build backend --prod --skip-nx-cache
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
