@@ -22,9 +22,31 @@ import { errorHandler } from './utilities/middleware';
 
 const app = express();
 
+// CORS configuration
+const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
+const allowedOrigins = corsOrigin.split(',').map((origin) => origin.trim());
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, Postman, curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        console.warn(`CORS blocked request from origin: ${origin}`);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true, // Allow cookies and authorization headers
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
+
 // Security middleware
 app.use(helmet());
-app.use(cors());
 
 // Body parsing middleware
 app.use(express.json());
@@ -108,7 +130,11 @@ const server = app.listen(port, () => {
 ║  Environment: ${process.env.NODE_ENV || 'development'.padEnd(33)}║
 ║  Port: ${port.toString().padEnd(40)}║
 ║  URL: http://localhost:${port}/api${' '.repeat(23)}║
+║  CORS: ${allowedOrigins.length} origin(s) allowed${' '.repeat(13)}║
 ╚════════════════════════════════════════════════╝
+
+Allowed CORS Origins:
+${allowedOrigins.map((o) => `  • ${o}`).join('\n')}
   `);
 });
 
