@@ -24,9 +24,8 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-# Copy dependencies from deps stage
+# Copy dependencies from deps stage (pnpm workspace: all deps in root node_modules)
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/apps/frontend/node_modules ./apps/frontend/node_modules
 
 # Copy source code
 COPY . .
@@ -54,8 +53,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 
 # Copy Next.js standalone output
-COPY --from=builder --chown=nextjs:nodejs /app/dist/apps/frontend/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/dist/apps/frontend/.next/static ./apps/frontend/.next/static
+# Next.js standalone builds to apps/frontend/.next in the workspace
+COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/.next/static ./apps/frontend/.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/public ./apps/frontend/public
 
 # Switch to non-root user
