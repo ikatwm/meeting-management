@@ -100,9 +100,13 @@ jobs:
 
       - name: Generate Prisma Client
         run: cd apps/backend && pnpm prisma generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Build Backend
         run: pnpm nx build backend --prod
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Run Tests
         run: pnpm nx test backend
@@ -150,9 +154,9 @@ jobs:
           echo ""
           echo "To deploy backend, uncomment ONE of the deployment options above:"
           echo "  - Render.com (OPTION 1)"
-#          echo "  - Railway (OPTION 2)"
-#          echo "  - Fly.io (OPTION 3)"
-#          echo "  - Docker (OPTION 4)"
+          echo "  - Railway (OPTION 2)"
+          echo "  - Fly.io (OPTION 3)"
+          echo "  - Docker (OPTION 4)"
           echo ""
           echo "Add required secrets to GitHub:"
           echo "  Settings → Secrets → Actions"
