@@ -12,8 +12,12 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml .npmrc ./
 COPY nx.json tsconfig.base.json tsconfig.json ./
 
-# Copy backend configuration files
+# Copy ALL app package.json files for proper workspace resolution
 COPY apps/backend/package.json ./apps/backend/
+COPY apps/frontend/package.json ./apps/frontend/
+COPY apps/backend-e2e/package.json ./apps/backend-e2e/
+
+# Copy backend configuration files
 COPY apps/backend/tsconfig*.json ./apps/backend/
 COPY apps/backend/webpack.config.js ./apps/backend/
 
