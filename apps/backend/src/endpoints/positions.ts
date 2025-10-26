@@ -4,7 +4,7 @@ import { findAllPositions, findAllAppliedPositions } from '../collections/positi
 import { authMiddleware } from '../utilities/middleware';
 import type { PositionResponse } from '../utilities/types';
 
-const router = Router();
+const router: Router = Router();
 
 // Apply auth middleware to all routes
 router.use(authMiddleware);

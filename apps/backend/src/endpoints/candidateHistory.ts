@@ -1,5 +1,4 @@
-import { Router } from 'express';
-import type { Request, Response } from 'express';
+import type { Request, Response, Router } from 'express';
 import { z } from 'zod';
 import { createCandidateHistorySchema, validateData } from '../utilities/validation';
 import { createCandidateHistory, findCandidateHistory } from '../collections/candidateHistory';
@@ -7,7 +6,7 @@ import { findCandidateById } from '../collections/candidates';
 import { authMiddleware } from '../utilities/middleware';
 import type { CandidateHistoryResponse } from '../utilities/types';
 
-const router = Router();
+const router: Router = Router();
 
 // Apply auth middleware to all routes
 router.use(authMiddleware);
@@ -25,7 +24,7 @@ router.get('/:candidateId/history', async (req: Request, res: Response) => {
       return;
     }
 
-    // Check if candidate exists
+    // Check if a candidate exists
     const candidate = await findCandidateById(candidateId);
     if (!candidate) {
       res.status(404).json({

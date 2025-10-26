@@ -17,7 +17,7 @@ import {
 import { authMiddleware } from '../utilities/middleware';
 import type { PaginatedMeetingsResponse, MeetingResponse } from '../utilities/types';
 
-const router = Router();
+const router: Router = Router();
 
 // Apply auth middleware to all routes
 router.use(authMiddleware);

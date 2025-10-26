@@ -6,7 +6,7 @@ import { addParticipant, removeParticipant } from '../collections/participants';
 import { findMeetingById } from '../collections/meetings';
 import { authMiddleware } from '../utilities/middleware';
 
-const router = Router();
+const router: Router = Router();
 
 // Apply auth middleware to all routes
 router.use(authMiddleware);

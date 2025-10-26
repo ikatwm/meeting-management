@@ -10,7 +10,7 @@ I have successfully implemented a complete, production-ready REST API backend fo
 
 ### Complete Schema Implementation
 
-All entities from the ER diagram in TASK.md have been implemented:
+All entities from the ER diagram in [ERDIAGRAM.md](../../../docs/ERDIAGRAM.md)TASK.md have been implemented:
 
 **Core Entities:**
 

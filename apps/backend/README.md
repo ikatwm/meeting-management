@@ -108,7 +108,7 @@ The API will be available at `http://localhost:3333/api`
 
 ### ER Diagram
 
-See `TASK.md` for the complete entity-relationship diagram.
+See [ERDIAGRAM.md](../../docs/ERDIAGRAM.md) for the complete entity-relationship diagram.
 
 ## API Endpoints
 

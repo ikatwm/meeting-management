@@ -17,8 +17,8 @@ Complete production deployment guide for the Meeting Manager application.
 **Recommended Production Stack:**
 
 - **Frontend**: Vercel (optimized for Next.js)
-- **Backend**: Railway, Render, or Fly.io
-- **Database**: Managed PostgreSQL (Neon, Supabase, Railway, or Render)
+- **Backend**: Render, Railway, or Fly.io (Render recommended)
+- **Database**: Managed PostgreSQL (Neon, Supabase, Render, or Railway)
 
 **Deployment Checklist:**
 
@@ -80,14 +80,14 @@ In Vercel Dashboard:
 2. Add the following variables:
 
 ```env
-NEXT_PUBLIC_API_URL=https://your-backend-url.railway.app
+NEXT_PUBLIC_API_URL=https://your-backend-url.onrender.com
 ```
 
 Or via CLI:
 
 ```bash
 vercel env add NEXT_PUBLIC_API_URL production
-# Enter: https://your-backend-url.railway.app
+# Enter: https://your-backend-url.onrender.com
 ```
 
 ### Step 5: Deploy to Production
@@ -128,7 +128,61 @@ Get these from:
 
 ## Backend Deployment Options
 
-### Option 1: Railway (Recommended)
+### Option 1: Render (Recommended)
+
+**Advantages**: Free tier available, automatic SSL, integrated database, Docker support
+
+#### Setup Steps
+
+1. **Create Account**: https://render.com/
+
+2. **Create PostgreSQL Database**
+
+   - Click "New +" → PostgreSQL
+   - Name: meeting-manager-db
+   - Database: meeting_manager
+   - User: (auto-generated)
+   - Region: Choose closest to users
+   - Plan: Free or Starter
+
+3. **Create Web Service**
+
+   - Click "New +" → Web Service
+   - Connect your GitHub repository
+   - Name: meeting-manager-backend
+   - Environment: Docker
+   - Region: Same as database
+   - Branch: main
+   - Dockerfile Path: `apps/backend/Dockerfile`
+   - Plan: Free or Starter
+
+4. **Set Environment Variables**
+
+```env
+DATABASE_URL=<internal-database-url-from-step-2>
+JWT_SECRET=your-super-secret-key
+JWT_EXPIRES_IN=7d
+CORS_ORIGIN=https://your-frontend.vercel.app
+NODE_ENV=production
+PORT=3333
+```
+
+5. **Add Build Command** (in Render settings)
+
+```bash
+cd ../.. && docker build -f apps/backend/Dockerfile -t backend .
+```
+
+6. **Deploy**
+
+   - Click "Create Web Service"
+   - Wait for deployment to complete
+
+7. **Run Migrations**
+   - Go to Shell tab in Render dashboard
+   - Run: `pnpm prisma migrate deploy`
+
+### Option 2: Railway
 
 **Advantages**: Easy PostgreSQL integration, automatic SSL, simple pricing
 
@@ -211,60 +265,6 @@ Create `railway.json` in `apps/backend/`:
   }
 }
 ```
-
-### Option 2: Render
-
-**Advantages**: Free tier available, automatic SSL, integrated database
-
-#### Setup Steps
-
-1. **Create Account**: https://render.com/
-
-2. **Create PostgreSQL Database**
-
-   - Click "New +" → PostgreSQL
-   - Name: meeting-manager-db
-   - Database: meeting_manager
-   - User: (auto-generated)
-   - Region: Choose closest to users
-   - Plan: Free or Starter
-
-3. **Create Web Service**
-
-   - Click "New +" → Web Service
-   - Connect your GitHub repository
-   - Name: meeting-manager-backend
-   - Environment: Docker
-   - Region: Same as database
-   - Branch: main
-   - Dockerfile Path: `apps/backend/Dockerfile`
-   - Plan: Free or Starter
-
-4. **Set Environment Variables**
-
-```env
-DATABASE_URL=<internal-database-url-from-step-2>
-JWT_SECRET=your-super-secret-key
-JWT_EXPIRES_IN=7d
-CORS_ORIGIN=https://your-frontend.vercel.app
-NODE_ENV=production
-PORT=3333
-```
-
-5. **Add Build Command** (in Render settings)
-
-```bash
-cd ../.. && docker build -f apps/backend/Dockerfile -t backend .
-```
-
-6. **Deploy**
-
-   - Click "Create Web Service"
-   - Wait for deployment to complete
-
-7. **Run Migrations**
-   - Go to Shell tab in Render dashboard
-   - Run: `pnpm prisma migrate deploy`
 
 ### Option 3: Fly.io
 
@@ -427,7 +427,7 @@ RATE_LIMIT_MAX_REQUESTS=100
 **Required:**
 
 ```env
-NEXT_PUBLIC_API_URL=https://your-backend-url.railway.app
+NEXT_PUBLIC_API_URL=https://your-backend-url.onrender.com
 ```
 
 **Optional:**
@@ -459,7 +459,7 @@ pnpm prisma migrate deploy
 
 ```bash
 # Backend
-curl https://your-backend-url.railway.app/health
+curl https://your-backend-url.onrender.com/health
 
 # Frontend
 curl https://your-frontend.vercel.app/api/health
@@ -469,10 +469,10 @@ curl https://your-frontend.vercel.app/api/health
 
 ```bash
 # Get API info
-curl https://your-backend-url.railway.app/api
+curl https://your-backend-url.onrender.com/api
 
 # Test authentication (if seed data exists)
-curl -X POST https://your-backend-url.railway.app/api/auth/login \
+curl -X POST https://your-backend-url.onrender.com/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"password"}'
 ```

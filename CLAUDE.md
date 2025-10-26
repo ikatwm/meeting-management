@@ -17,7 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Database Schema
 
-Key entities and relationships (refer to TASK.md for full ER diagram):
+Key entities and relationships (refer to [ERDIAGRAM.md](docs/ERDIAGRAM.md) for full ER diagram):
 
 - **users**: HR/managers/staff with roles and positions
 - **meetings**: Interview sessions with candidates (title, time, location, type, status)

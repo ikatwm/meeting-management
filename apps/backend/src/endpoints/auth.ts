@@ -7,7 +7,7 @@ import { comparePassword } from '../utilities/auth';
 import { generateToken } from '../utilities/jwt';
 import type { AuthResponse } from '../utilities/types';
 
-const router = Router();
+const router: Router = Router();
 
 // POST /api/auth/register
 router.post('/register', async (req: Request, res: Response) => {
