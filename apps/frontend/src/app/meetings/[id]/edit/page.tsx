@@ -18,8 +18,8 @@ import type { Meeting, MeetingType, MeetingStatus } from '@/types';
 
 const meetingSchema = z.object({
   title: z.string().min(1, 'Title is required'),
-  startTime: z.string().min(1, 'Start time is required'),
-  endTime: z.string().min(1, 'End time is required'),
+  startTime: z.iso.datetime('Invalid start time format'),
+  endTime: z.iso.datetime('Invalid end time format'),
   location: z.string().min(1, 'Location is required'),
   meetingType: z.enum(['onsite', 'zoom', 'google_meet']),
   status: z.enum(['confirmed', 'pending']),
