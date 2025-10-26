@@ -76,6 +76,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Clean Nx cache
+        run: pnpm nx reset
+
       - name: Generate Prisma Client
         run: cd apps/backend && pnpm prisma generate
         env:
@@ -83,6 +86,8 @@ jobs:
 
       - name: Run TypeScript compiler
         run: pnpm typecheck
+        env:
+          NX_SKIP_NX_CACHE: true
 
   # Job 3: Run tests (commented out - test target not configured yet)
   # test:
@@ -172,13 +177,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Clean Nx cache
+        run: pnpm nx reset
+
       - name: Generate Prisma Client (backend only)
         if: matrix.app == 'backend'
         run: cd apps/backend && pnpm prisma generate
+        env:
+          DATABASE_URL: postgresql://placeholder:placeholder@placeholder:5432/placeholder
 
       - name: Build ${{ matrix.app }}
         env:
           NEXT_PUBLIC_API_URL: ${{ matrix.app == 'frontend' && 'http://localhost:3333' || '' }}
+          NX_SKIP_NX_CACHE: true
         run: pnpm nx build ${{ matrix.app }} --configuration=production
 
       - name: Upload build artifacts
