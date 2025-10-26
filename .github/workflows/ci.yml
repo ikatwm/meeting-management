@@ -274,27 +274,3 @@ jobs:
             exit 1
           fi
           echo "All CI jobs passed successfully!"
-
-  # Trigger deployment workflow on successful CI (main branch only)
-  trigger-deployment:
-    name: Trigger Backend Deployment
-    runs-on: ubuntu-latest
-    needs: [ci-success]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-    steps:
-      - name: Trigger deployment workflow
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const result = await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'deploy-backend.yml',
-              ref: 'main',
-              inputs: {
-                platform: 'render'  // Default to Render.com
-              }
-            });
-            console.log('Deployment workflow triggered:', result.status);
