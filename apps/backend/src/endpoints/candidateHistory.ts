@@ -1,4 +1,5 @@
-import type { Request, Response, Router } from 'express';
+import { Router } from 'express';
+import type { Request, Response } from 'express';
 import { z } from 'zod';
 import { createCandidateHistorySchema, validateData } from '../utilities/validation';
 import { createCandidateHistory, findCandidateHistory } from '../collections/candidateHistory';
