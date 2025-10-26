@@ -18,8 +18,32 @@ import type { Meeting, MeetingType, MeetingStatus } from '@/types';
 
 const meetingSchema = z.object({
   title: z.string().min(1, 'Title is required'),
-  startTime: z.iso.datetime('Invalid start time format'),
-  endTime: z.iso.datetime('Invalid end time format'),
+  startTime: z
+    .string()
+    .min(1, 'Start time is required')
+    .transform((val) => {
+      // Convert datetime-local format (YYYY-MM-DDTHH:mm) to ISO format
+      // datetime-local is in local timezone, so we need to convert to UTC properly
+      if (val && !val.includes('Z')) {
+        const date = new Date(val);
+        return date.toISOString();
+      }
+      return val;
+    })
+    .pipe(z.iso.datetime('Invalid start time format')),
+  endTime: z
+    .string()
+    .min(1, 'End time is required')
+    .transform((val) => {
+      // Convert datetime-local format (YYYY-MM-DDTHH:mm) to ISO format
+      // datetime-local is in local timezone, so we need to convert to UTC properly
+      if (val && !val.includes('Z')) {
+        const date = new Date(val);
+        return date.toISOString();
+      }
+      return val;
+    })
+    .pipe(z.iso.datetime('Invalid end time format')),
   location: z.string().min(1, 'Location is required'),
   meetingType: z.enum(['onsite', 'zoom', 'google_meet']),
   status: z.enum(['confirmed', 'pending']),
