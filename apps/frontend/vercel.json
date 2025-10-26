@@ -1,14 +1,13 @@
 {
   "buildCommand": "cd ../.. && pnpm nx build frontend --configuration=production --skip-nx-cache",
-  "outputDirectory": "../../dist/apps/frontend",
-  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+  "installCommand": "npm install -g pnpm && cd ../.. && pnpm install --frozen-lockfile",
   "framework": "nextjs",
   "env": {
-    "NEXT_PUBLIC_API_URL": "@production_api_url"
+    "NEXT_PUBLIC_API_URL": ""
   },
   "build": {
     "env": {
-      "NEXT_PUBLIC_API_URL": "@production_api_url"
+      "NEXT_PUBLIC_API_URL": ""
     }
   },
   "headers": [
