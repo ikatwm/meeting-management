@@ -85,6 +85,7 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           NEXT_PUBLIC_API_URL: ${{ secrets.PRODUCTION_API_URL }}
+          NX_SKIP_NX_CACHE: true
 
       - name: Deploy to Vercel
         id: vercel-deploy
