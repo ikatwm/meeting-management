@@ -8,11 +8,14 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-# Copy package files for dependency installation
-COPY package.json pnpm-lock.yaml* ./
+# Copy workspace configuration files
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml ./
+COPY nx.json ./
+
+# Copy backend package.json
 COPY apps/backend/package.json ./apps/backend/
 
-# Install dependencies
+# Install dependencies (pnpm workspace installs all in root node_modules)
 RUN pnpm install --frozen-lockfile
 
 # Stage 2: Build application
@@ -24,9 +27,8 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-# Copy dependencies from deps stage
+# Copy dependencies from deps stage (pnpm workspace: all deps in root node_modules)
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/apps/backend/node_modules ./apps/backend/node_modules
 
 # Copy source code (includes prisma directory)
 COPY . .
@@ -54,7 +56,6 @@ RUN addgroup --system --gid 1001 nodejs && \
 COPY --from=builder /app/dist/apps/backend ./dist
 COPY --from=builder /app/apps/backend/prisma ./prisma
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/apps/backend/node_modules ./apps/backend/node_modules
 
 # Copy package.json for potential runtime needs
 COPY --from=builder /app/apps/backend/package.json ./package.json
