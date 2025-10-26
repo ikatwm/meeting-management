@@ -9,7 +9,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 
 # Copy workspace configuration files
-COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml .npmrc ./
 COPY nx.json tsconfig.base.json tsconfig.json ./
 
 # Copy backend configuration files
@@ -18,7 +18,8 @@ COPY apps/backend/tsconfig*.json ./apps/backend/
 COPY apps/backend/webpack.config.js ./apps/backend/
 
 # Install dependencies (pnpm workspace installs all in root node_modules)
-RUN pnpm install --frozen-lockfile
+# Use --ignore-scripts=false to allow essential build scripts like @swc/core
+RUN pnpm install --frozen-lockfile --ignore-scripts=false
 
 # Stage 2: Build application
 FROM node:20-alpine AS builder
