@@ -372,7 +372,31 @@ exit
 
 ## Database Setup
 
-### Option 1: Neon (Recommended for Vercel)
+### ✅ Option 1: Vercel Postgres (Currently Deployed)
+
+**Recommended** - Prisma-compatible PostgreSQL 15 with built-in connection pooling
+
+1. Go to Vercel Dashboard → Storage → Create Database
+2. Select "Postgres" → Create
+3. Copy connection string from `.env.local` tab
+4. Add to backend environment variables as `DATABASE_URL`
+5. Connection pooling is automatically enabled
+
+**Benefits:**
+
+- Direct Vercel integration
+- Neon-powered (serverless PostgreSQL)
+- Automatic connection pooling
+- SSL by default
+- Free tier available
+
+**Connection String Format:**
+
+```
+postgres://user:password@region.vercel-postgres.com:5432/database?sslmode=require
+```
+
+### Option 2: Neon (Alternative)
 
 1. Create account: https://neon.tech/
 2. Create new project
@@ -386,7 +410,7 @@ exit
 postgresql://user:password@ep-xxx.us-east-2.aws.neon.tech/dbname?sslmode=require
 ```
 
-### Option 2: Supabase
+### Option 3: Supabase
 
 1. Create account: https://supabase.com/
 2. Create new project
@@ -394,11 +418,11 @@ postgresql://user:password@ep-xxx.us-east-2.aws.neon.tech/dbname?sslmode=require
 4. Copy connection string (session mode)
 5. Use in backend DATABASE_URL
 
-### Option 3: Railway PostgreSQL
+### Option 4: Railway PostgreSQL
 
 Automatically created with Railway deployment (see Railway section above)
 
-### Option 4: Render PostgreSQL
+### Option 5: Render PostgreSQL
 
 Automatically created with Render deployment (see Render section above)
 
