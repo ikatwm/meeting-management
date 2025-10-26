@@ -25,33 +25,33 @@ export default function CandidatesPage() {
   });
 
   useEffect(() => {
-    loadCandidates();
+    const loadCandidates = async () => {
+      try {
+        setIsLoading(true);
+        const response = await apiClient.getCandidates({
+          page: pagination.page,
+          limit: pagination.limit,
+          search: searchTerm || undefined,
+        });
+
+        setCandidates(response?.data || []);
+        setPagination({
+          page: response?.pagination?.page || 1,
+          limit: response?.pagination?.pageSize || 20,
+          total: response?.pagination?.total || 0,
+          totalPages: response?.pagination?.totalPages || 0,
+        });
+      } catch (error) {
+        toast.error('Failed to load candidates');
+        console.error(error);
+        setCandidates([]); // Ensure candidates is always an array
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadCandidates();
   }, [pagination.page, searchTerm]);
-
-  const loadCandidates = async () => {
-    try {
-      setIsLoading(true);
-      const response = await apiClient.getCandidates({
-        page: pagination.page,
-        limit: pagination.limit,
-        search: searchTerm || undefined,
-      });
-
-      setCandidates(response?.data || []);
-      setPagination({
-        page: response?.pagination?.page || 1,
-        limit: response?.pagination?.pageSize || 20,
-        total: response?.pagination?.total || 0,
-        totalPages: response?.pagination?.totalPages || 0,
-      });
-    } catch (error) {
-      toast.error('Failed to load candidates');
-      console.error(error);
-      setCandidates([]); // Ensure candidates is always an array
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handlePageChange = (newPage: number) => {
     setPagination((prev) => ({ ...prev, page: newPage }));
@@ -64,10 +64,12 @@ export default function CandidatesPage() {
 
   const getStatusBadge = (status: string) => {
     const variants: Record<string, 'success' | 'warning' | 'danger' | 'info'> = {
-      pending: 'warning',
-      interviewing: 'info',
-      accepted: 'success',
+      applied: 'info',
+      screening: 'warning',
+      interview: 'warning',
+      offer: 'success',
       rejected: 'danger',
+      hired: 'success',
     };
     return <Badge variant={variants[status] || 'default'}>{status}</Badge>;
   };
@@ -83,6 +85,9 @@ export default function CandidatesPage() {
       <main className="container mx-auto py-8">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold text-gray-900">Candidates</h1>
+          <Link href="/candidates/new">
+            <Button>+ New Candidate</Button>
+          </Link>
         </div>
 
         <div className="mb-6">

@@ -71,30 +71,30 @@ export default function EditMeetingPage() {
   });
 
   useEffect(() => {
-    loadMeeting();
+    const loadMeeting = async () => {
+      try {
+        const data = await apiClient.getMeetingById(meetingId);
+        setMeeting(data);
+
+        reset({
+          title: data.title,
+          startTime: format(new Date(data.startTime), "yyyy-MM-dd'T'HH:mm"),
+          endTime: format(new Date(data.endTime), "yyyy-MM-dd'T'HH:mm"),
+          location: data.location || '',
+          meetingType: data.meetingType,
+          status: data.status,
+          notes: data.notes || '',
+        });
+      } catch (error) {
+        toast.error('Failed to load meeting');
+        router.push('/dashboard');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadMeeting();
   }, [meetingId]);
-
-  const loadMeeting = async () => {
-    try {
-      const data = await apiClient.getMeetingById(meetingId);
-      setMeeting(data);
-
-      reset({
-        title: data.title,
-        startTime: format(new Date(data.startTime), "yyyy-MM-dd'T'HH:mm"),
-        endTime: format(new Date(data.endTime), "yyyy-MM-dd'T'HH:mm"),
-        location: data.location || '',
-        meetingType: data.meetingType,
-        status: data.status,
-        notes: data.notes || '',
-      });
-    } catch (error) {
-      toast.error('Failed to load meeting');
-      router.push('/dashboard');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const onSubmit = async (data: MeetingFormData) => {
     setIsSaving(true);

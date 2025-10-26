@@ -4,7 +4,13 @@ export type MeetingStatus = 'confirmed' | 'pending';
 
 export type MeetingType = 'onsite' | 'zoom' | 'google_meet';
 
-export type CandidateStatus = 'pending' | 'interviewing' | 'rejected' | 'accepted';
+export type CandidateStatus =
+  | 'applied'
+  | 'screening'
+  | 'interview'
+  | 'offer'
+  | 'rejected'
+  | 'hired';
 
 export type User = {
   id: number;

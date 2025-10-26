@@ -23,32 +23,32 @@ export default function DashboardPage() {
   });
 
   useEffect(() => {
-    loadMeetings();
+    const loadMeetings = async () => {
+      try {
+        setIsLoading(true);
+        const response = await apiClient.getMeetings({
+          page: pagination.page,
+          limit: pagination.limit,
+        });
+
+        setMeetings(response?.data || []);
+        setPagination({
+          page: response?.pagination?.page || 1,
+          limit: response?.pagination?.pageSize || 10,
+          total: response?.pagination?.total || 0,
+          totalPages: response?.pagination?.totalPages || 0,
+        });
+      } catch (error) {
+        toast.error('Failed to load meetings');
+        console.error(error);
+        setMeetings([]); // Ensure meetings is always an array
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadMeetings();
   }, [pagination.page]);
-
-  const loadMeetings = async () => {
-    try {
-      setIsLoading(true);
-      const response = await apiClient.getMeetings({
-        page: pagination.page,
-        limit: pagination.limit,
-      });
-
-      setMeetings(response?.data || []);
-      setPagination({
-        page: response?.pagination?.page || 1,
-        limit: response?.pagination?.pageSize || 10,
-        total: response?.pagination?.total || 0,
-        totalPages: response?.pagination?.totalPages || 0,
-      });
-    } catch (error) {
-      toast.error('Failed to load meetings');
-      console.error(error);
-      setMeetings([]); // Ensure meetings is always an array
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handlePageChange = (newPage: number) => {
     setPagination((prev) => ({ ...prev, page: newPage }));

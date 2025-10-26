@@ -4,6 +4,7 @@ import { z } from 'zod';
 import {
   createCandidateSchema,
   updateCandidateSchema,
+  paginationSchema,
   validateData,
 } from '../utilities/validation';
 import {
@@ -15,29 +16,41 @@ import {
   findCandidateByEmail,
 } from '../collections/candidates';
 import { authMiddleware } from '../utilities/middleware';
-import type { CandidateResponse } from '../utilities/types';
+import type { CandidateResponse, PaginatedCandidatesResponse } from '../utilities/types';
 
 const router: Router = Router();
 
 // Apply auth middleware to all routes
 router.use(authMiddleware);
 
-// GET /api/candidates
+// GET /api/candidates (with pagination)
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const candidates = await findCandidates();
+    const { page, pageSize } = validateData(paginationSchema, req.query);
+    const search = req.query.search as string | undefined;
+    const status = req.query.status as string | undefined;
 
-    const response: CandidateResponse[] = candidates.map((candidate) => ({
-      id: candidate.id,
-      name: candidate.name,
-      email: candidate.email,
-      appliedPositionId: candidate.appliedPositionId,
-      status: candidate.status,
-      interviewNotes: candidate.interviewNotes,
-      createdAt: candidate.createdAt.toISOString(),
-      updatedAt: candidate.updatedAt.toISOString(),
-      appliedPosition: candidate.appliedPosition,
-    }));
+    const { candidates, total } = await findCandidates(page, pageSize, search, status);
+
+    const response: PaginatedCandidatesResponse = {
+      candidates: candidates.map((candidate) => ({
+        id: candidate.id,
+        name: candidate.name,
+        email: candidate.email,
+        appliedPositionId: candidate.appliedPositionId,
+        status: candidate.status,
+        interviewNotes: candidate.interviewNotes,
+        createdAt: candidate.createdAt.toISOString(),
+        updatedAt: candidate.updatedAt.toISOString(),
+        appliedPosition: candidate.appliedPosition,
+      })),
+      pagination: {
+        total,
+        page,
+        pageSize,
+        totalPages: Math.ceil(total / pageSize),
+      },
+    };
 
     res.status(200).json(response);
   } catch (error) {

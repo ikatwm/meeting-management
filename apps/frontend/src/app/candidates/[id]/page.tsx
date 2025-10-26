@@ -27,10 +27,6 @@ export default function CandidateSummaryPage() {
   const [feedbackText, setFeedbackText] = useState('');
   const [isSavingFeedback, setIsSavingFeedback] = useState(false);
 
-  useEffect(() => {
-    loadCandidateData();
-  }, [candidateId]);
-
   const loadCandidateData = async () => {
     try {
       setIsLoading(true);
@@ -50,6 +46,10 @@ export default function CandidateSummaryPage() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    void loadCandidateData();
+  }, [candidateId]);
 
   const handleSaveFeedback = async () => {
     setIsSavingFeedback(true);
@@ -81,12 +81,28 @@ export default function CandidateSummaryPage() {
     }
   };
 
+  const handleDeleteCandidate = async () => {
+    if (!confirm('Are you sure you want to delete this candidate? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      await apiClient.deleteCandidate(candidateId);
+      toast.success('Candidate deleted successfully!');
+      router.push('/candidates');
+    } catch (error) {
+      toast.error('Failed to delete candidate');
+    }
+  };
+
   const getStatusBadge = (status: string) => {
     const variants: Record<string, 'success' | 'warning' | 'danger' | 'info'> = {
-      pending: 'warning',
-      interviewing: 'info',
-      accepted: 'success',
+      applied: 'info',
+      screening: 'warning',
+      interview: 'warning',
+      offer: 'success',
       rejected: 'danger',
+      hired: 'success',
     };
     return <Badge variant={variants[status] || 'default'}>{status}</Badge>;
   };
@@ -125,7 +141,17 @@ export default function CandidateSummaryPage() {
                 <CardTitle>{candidate.name}</CardTitle>
                 <p className="mt-1 text-sm text-gray-600">{candidate.appliedPosition?.name}</p>
               </div>
-              {getStatusBadge(candidate.status)}
+              <div className="flex items-center gap-2">
+                {getStatusBadge(candidate.status)}
+                <Link href={`/candidates/${candidate.id}/edit`}>
+                  <Button variant="secondary" size="sm">
+                    Edit
+                  </Button>
+                </Link>
+                <Button variant="danger" size="sm" onClick={handleDeleteCandidate}>
+                  Delete
+                </Button>
+              </div>
             </div>
           </CardHeader>
           <CardContent>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,37 +13,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
-import type { Candidate, MeetingType, MeetingStatus } from '@/types';
+import { Modal } from '@/components/ui/Modal';
+import { CandidateForm } from '@/components/forms/CandidateForm';
+import type { Candidate, MeetingType, MeetingStatus, CandidateStatus } from '@/types';
 
 const meetingSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   candidateId: z.string().min(1, 'Candidate is required'),
-  startTime: z
-    .string()
-    .min(1, 'Start time is required')
-    .transform((val) => {
-      // Convert datetime-local format (YYYY-MM-DDTHH:mm) to ISO format
-      // datetime-local is in local timezone, so we need to convert to UTC properly
-      if (val && !val.includes('Z')) {
-        const date = new Date(val);
-        return date.toISOString();
-      }
-      return val;
-    })
-    .pipe(z.iso.datetime('Invalid start time format')),
-  endTime: z
-    .string()
-    .min(1, 'End time is required')
-    .transform((val) => {
-      // Convert datetime-local format (YYYY-MM-DDTHH:mm) to ISO format
-      // datetime-local is in local timezone, so we need to convert to UTC properly
-      if (val && !val.includes('Z')) {
-        const date = new Date(val);
-        return date.toISOString();
-      }
-      return val;
-    })
-    .pipe(z.iso.datetime('Invalid end time format')),
+  date: z.string().min(1, 'Date is required'),
+  startTime: z.string().min(1, 'Start time is required'),
+  endTime: z.string().min(1, 'End time is required'),
   location: z.string().min(1, 'Location is required'),
   meetingType: z.enum(['onsite', 'zoom', 'google_meet']),
   status: z.enum(['confirmed', 'pending']),
@@ -56,30 +35,61 @@ export default function NewMeetingPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [isNewCandidateModalOpen, setIsNewCandidateModalOpen] = useState(false);
+  const [isCreatingCandidate, setIsCreatingCandidate] = useState(false);
 
   const {
     register,
     handleSubmit,
-    watch,
+    setValue,
     formState: { errors },
   } = useForm<MeetingFormData>({
     resolver: zodResolver(meetingSchema),
     defaultValues: {
+      date: format(new Date(), 'yyyy-MM-dd'),
+      startTime: '09:00',
+      endTime: '10:00',
       meetingType: 'onsite',
       status: 'pending',
     },
   });
 
-  useEffect(() => {
-    loadCandidates();
-  }, []);
-
-  const loadCandidates = async () => {
+  const loadCandidates = useCallback(async () => {
     try {
       const data = await apiClient.getCandidates({ limit: 100 });
       setCandidates(data.data);
     } catch (error) {
       toast.error('Failed to load candidates');
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadCandidates();
+  }, [loadCandidates]);
+
+  const handleCreateCandidate = async (data: {
+    name: string;
+    email: string;
+    appliedPositionId: number;
+    status: CandidateStatus;
+    interviewNotes?: string;
+  }) => {
+    setIsCreatingCandidate(true);
+
+    try {
+      const newCandidate = await apiClient.createCandidate(data);
+      toast.success('Candidate created successfully!');
+      await loadCandidates();
+      setValue('candidateId', newCandidate.id.toString());
+      setIsNewCandidateModalOpen(false);
+    } catch (error: any) {
+      if (error.message?.includes('already exists')) {
+        toast.error('A candidate with this email already exists');
+      } else {
+        toast.error('Failed to create candidate');
+      }
+    } finally {
+      setIsCreatingCandidate(false);
     }
   };
 
@@ -87,11 +97,15 @@ export default function NewMeetingPage() {
     setIsLoading(true);
 
     try {
+      // Combine date and time into ISO datetime strings
+      const startDateTime = new Date(`${data.date}T${data.startTime}`).toISOString();
+      const endDateTime = new Date(`${data.date}T${data.endTime}`).toISOString();
+
       await apiClient.createMeeting({
         title: data.title,
         candidateId: Number(data.candidateId),
-        startTime: data.startTime,
-        endTime: data.endTime,
+        startTime: startDateTime,
+        endTime: endDateTime,
         location: data.location,
         meetingType: data.meetingType as MeetingType,
         status: data.status as MeetingStatus,
@@ -125,63 +139,46 @@ export default function NewMeetingPage() {
                   {...register('title')}
                 />
 
-                <Select
-                  label="Candidate"
-                  placeholder="Select a candidate"
-                  options={(candidates || []).map((c) => ({
-                    value: c.id,
-                    label: `${c.name} – ${c.appliedPosition?.name || 'N/A'}`,
-                  }))}
-                  error={errors.candidateId?.message}
-                  {...register('candidateId')}
-                />
+                <div>
+                  <Select
+                    label="Candidate"
+                    placeholder="Select a candidate"
+                    options={(candidates || []).map((c) => ({
+                      value: c.id,
+                      label: `${c.name} – ${c.appliedPosition?.name || 'N/A'}`,
+                    }))}
+                    error={errors.candidateId?.message}
+                    {...register('candidateId')}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setIsNewCandidateModalOpen(true)}
+                    className="mt-2 text-sm text-primary-600 hover:text-primary-700 font-medium"
+                  >
+                    + Create New Candidate
+                  </button>
+                </div>
 
                 <Input
                   label="Date"
                   type="date"
                   min={format(new Date(), 'yyyy-MM-dd')}
-                  error={errors.startTime?.message}
-                  {...register('startTime', {
-                    onChange: (e) => {
-                      const dateValue = e.target.value;
-                      if (dateValue) {
-                        const currentTime = watch('startTime')?.split('T')[1] || '09:00';
-                        e.target.value = `${dateValue}T${currentTime}`;
-                      }
-                    },
-                  })}
+                  error={errors.date?.message}
+                  {...register('date')}
                 />
 
                 <Input
                   label="Start Time"
                   type="time"
                   error={errors.startTime?.message}
-                  {...register('startTime', {
-                    onChange: (e) => {
-                      const timeValue = e.target.value;
-                      const dateValue =
-                        watch('startTime')?.split('T')[0] || format(new Date(), 'yyyy-MM-dd');
-                      if (timeValue) {
-                        e.target.value = `${dateValue}T${timeValue}`;
-                      }
-                    },
-                  })}
+                  {...register('startTime')}
                 />
 
                 <Input
                   label="End Time"
                   type="time"
                   error={errors.endTime?.message}
-                  {...register('endTime', {
-                    onChange: (e) => {
-                      const timeValue = e.target.value;
-                      const dateValue =
-                        watch('startTime')?.split('T')[0] || format(new Date(), 'yyyy-MM-dd');
-                      if (timeValue) {
-                        e.target.value = `${dateValue}T${timeValue}`;
-                      }
-                    },
-                  })}
+                  {...register('endTime')}
                 />
 
                 <Select
@@ -238,6 +235,19 @@ export default function NewMeetingPage() {
           </CardContent>
         </Card>
       </main>
+
+      <Modal
+        isOpen={isNewCandidateModalOpen}
+        onClose={() => setIsNewCandidateModalOpen(false)}
+        title="Create New Candidate"
+      >
+        <CandidateForm
+          onSubmit={handleCreateCandidate}
+          onCancel={() => setIsNewCandidateModalOpen(false)}
+          isLoading={isCreatingCandidate}
+          submitLabel="Create Candidate"
+        />
+      </Modal>
     </div>
   );
 }

@@ -84,6 +84,16 @@ export type PaginatedMeetingsResponse = {
   };
 };
 
+export type PaginatedCandidatesResponse = {
+  candidates: CandidateResponse[];
+  pagination: {
+    total: number;
+    page: number;
+    pageSize: number;
+    totalPages: number;
+  };
+};
+
 // Candidate Types
 export type CandidateStatus =
   | 'applied'

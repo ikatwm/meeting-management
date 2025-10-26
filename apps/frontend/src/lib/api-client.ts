@@ -174,7 +174,7 @@ class ApiClient {
 
   // Applied Positions
   async getAppliedPositions(): Promise<AppliedPosition[]> {
-    const { data } = await this.client.get<AppliedPosition[]>('/applied-positions');
+    const { data } = await this.client.get<AppliedPosition[]>('/positions/applied');
     return data;
   }
 
