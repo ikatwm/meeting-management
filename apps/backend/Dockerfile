@@ -21,9 +21,12 @@ COPY apps/backend-e2e/package.json ./apps/backend-e2e/
 COPY apps/backend/tsconfig*.json ./apps/backend/
 COPY apps/backend/webpack.config.js ./apps/backend/
 
-# Install dependencies (pnpm workspace installs all in root node_modules)
-# Use --ignore-scripts=false to allow essential build scripts like @swc/core
+# Install root and workspace dependencies (root tools + backend app deps)
+# First install root deps for Nx/Webpack caching
 RUN pnpm install --frozen-lockfile --ignore-scripts=false
+# Ensure backend package deps (e.g., zod, cors, helmet, bcryptjs, jsonwebtoken) are installed
+# Using filter guarantees the app's direct deps are present even if lockfile was created without them
+RUN pnpm --filter @meeting-management/backend... install --ignore-scripts=false --frozen-lockfile=false
 
 # Stage 2: Build application
 FROM node:20-alpine AS builder
