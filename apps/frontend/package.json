@@ -2,6 +2,11 @@
   "name": "@meeting-management/frontend",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "autoprefixer": "^10.4.21",

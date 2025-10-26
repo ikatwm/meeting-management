@@ -1,12 +1,11 @@
 {
+  "buildCommand": "next build",
   "installCommand": "npm install -g pnpm && cd ../.. && pnpm install --frozen-lockfile",
   "framework": "nextjs",
-  "env": {
-    "NEXT_PUBLIC_API_URL": ""
-  },
   "build": {
     "env": {
-      "NEXT_PUBLIC_API_URL": ""
+      "NEXT_PUBLIC_API_URL": "",
+      "NX_SKIP_NX_CACHE": "true"
     }
   },
   "headers": [
