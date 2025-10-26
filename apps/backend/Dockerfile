@@ -41,7 +41,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Build the backend application (Prisma client will be generated at runtime)
-RUN pnpm nx build backend --prod
+RUN pnpm nx build backend --prod --skip-nx-cache
 
 # Stage 3: Production runtime
 FROM node:20-alpine AS runner
