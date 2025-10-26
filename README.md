@@ -11,7 +11,7 @@
 
 - 🚀 **Frontend**: Deployed to Vercel (auto-deploy on push to main)
 - 🔧 **Backend**: Deployed to Render.com with Docker
-- 💾 **Database**: PostgreSQL managed by Render.com
+- 💾 **Database**: Vercel Postgres (Prisma-compatible PostgreSQL)
 - ✅ **CI/CD**: GitHub Actions pipeline operational
 
 📖 See **[docs/DEPLOYMENT_SUCCESS.md](./docs/DEPLOYMENT_SUCCESS.md)** for complete deployment details and configuration.
@@ -93,7 +93,7 @@ pnpm dev
 | -------------------- | --------------------------------------------------------------- |
 | **Frontend**         | Next.js 15, React 19, TypeScript 5.9, Tailwind CSS, NextAuth.js |
 | **Backend**          | Node.js, Express 4.21, TypeScript 5.9, Prisma                   |
-| **Database**         | PostgreSQL 16                                                   |
+| **Database**         | Vercel Postgres (PostgreSQL 15)                                 |
 | **Authentication**   | JWT, bcrypt, NextAuth.js                                        |
 | **Monorepo**         | Nx 22.0.1                                                       |
 | **Package Manager**  | pnpm                                                            |
@@ -225,7 +225,12 @@ docker compose build          # Rebuild images
 #### Backend (.env)
 
 ```env
+# Local development (Docker PostgreSQL)
 DATABASE_URL="postgresql://user:password@localhost:5432/meeting_db"
+
+# Production (Vercel Postgres)
+# DATABASE_URL="postgres://user:password@region.vercel-postgres.com:5432/database?sslmode=require"
+
 JWT_SECRET="your-super-secret-jwt-key"
 JWT_EXPIRES_IN="7d"
 PORT=3333
@@ -244,7 +249,7 @@ See `.env.example` files for complete configuration options.
 
 ## 📊 Database Schema
 
-The application uses PostgreSQL with the following main entities:
+The application uses **Vercel Postgres** (PostgreSQL 15) with the following main entities:
 
 - **users** - HR managers and staff
 - **candidates** - Job applicants
@@ -308,8 +313,8 @@ This project uses **GitHub Actions** for automated deployment:
 
 ```bash
 # Backend (Render.com) - CONFIGURED ✅
-RENDER_SERVICE_ID     # From service URL (srv-xxxxx)
-DATABASE_URL          # PostgreSQL connection string
+RENDER_SERVICE_ID     # From Render service URL (srv-xxxxx)
+DATABASE_URL          # From Vercel Postgres connection string
 JWT_SECRET            # Generate: openssl rand -base64 32
 ```
 

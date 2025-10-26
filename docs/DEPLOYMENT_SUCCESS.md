@@ -10,7 +10,7 @@ The Meeting Management application is successfully deployed and operational:
 
 - ✅ **Frontend**: Auto-deployed to Vercel via Git integration
 - ✅ **Backend**: Deployed to Render.com with Docker
-- ✅ **Database**: PostgreSQL managed by Render.com
+- ✅ **Database**: Vercel Postgres (Prisma-compatible PostgreSQL)
 - ✅ **CI/CD**: GitHub Actions pipeline running successfully
 - ✅ **Security**: JWT authentication, HTTPS, CORS configured
 - ✅ **Monitoring**: Health checks enabled on both services
@@ -42,10 +42,11 @@ The Meeting Management application is successfully deployed and operational:
     │ (Git Auto) │      │  (Docker)  │
     └─────┬──────┘      └──────┬─────┘
           │                    │
-          │             ┌──────▼─────┐
-          │             │ PostgreSQL │
-          │             │  Database  │
-          │             └────────────┘
+          │             ┌──────▼───────┐
+          │             │    Vercel    │
+          │             │   Postgres   │
+          │             │ (PostgreSQL) │
+          │             └──────────────┘
           │                    │
     ┌─────▼────────────────────▼─────┐
     │    Production Application      │
@@ -115,14 +116,16 @@ PORT=3333
 - ✅ Docker-based deployment
 - ✅ Fast builds with optimized ownership changes
 
-### Database (PostgreSQL)
+### Database (Vercel Postgres)
 
-**Platform**: Render.com Managed PostgreSQL
+**Platform**: Vercel Postgres (Prisma-compatible PostgreSQL)
 **Configuration**:
 
-- Version: PostgreSQL 16
+- Version: PostgreSQL 15 (Neon-powered)
 - Connection: SSL required
-- Migrations: Auto-run via Dockerfile startup script
+- Connection pooling: Built-in
+- Migrations: Auto-run via Dockerfile startup script on backend
+- Integration: Direct integration with Vercel projects
 
 ## 🚀 CI/CD Pipeline
 

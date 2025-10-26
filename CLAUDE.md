@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Meeting Manager** - A full-stack TypeScript monorepo application for managing candidate interviews and meetings. Built with Nx monorepo structure, Next.js frontend, Express backend, and PostgreSQL database.
+**Meeting Manager** - A full-stack TypeScript monorepo application for managing candidate interviews and meetings. Built with Nx monorepo structure, Next.js frontend, Express backend, and Vercel Postgres database.
 
 ## Tech Stack
 
