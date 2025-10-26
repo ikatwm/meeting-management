@@ -118,10 +118,7 @@ jobs:
       # OPTION 1: Deploy to Render.com (uncomment to use)
       - name: Deploy to Render
         run: |
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
-            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-            -H "Content-Type: application/json" \
-            -d '{"clearCache": false}'
+          curl -X POST "https://api.render.com/deploy/${{ secrets.RENDER_SERVICE_ID }}"
 
       # OPTION 2: Deploy to Railway (uncomment to use)
       # - name: Install Railway CLI

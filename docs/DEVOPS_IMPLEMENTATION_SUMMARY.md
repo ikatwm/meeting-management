@@ -131,8 +131,8 @@ Complete DevOps infrastructure has been implemented for the Meeting Manager appl
   **2. Backend Deployment**:
 
   - Template configurations for:
-    - Railway (recommended)
-    - Render
+    - Render.com (recommended)
+    - Railway
     - Fly.io
   - Manual enablement with secrets
 
@@ -245,8 +245,8 @@ Complete DevOps infrastructure has been implemented for the Meeting Manager appl
 - **Sections**:
   - Overview and architecture
   - Frontend deployment (Vercel)
-  - Backend deployment options (Railway/Render/Fly.io)
-  - Database setup (Neon/Supabase/Railway/Render)
+  - Backend deployment options (Render/Railway/Fly.io)
+  - Database setup (Neon/Supabase/Render/Railway)
   - Environment variables
   - Post-deployment checklist
   - Production checklist
@@ -302,16 +302,20 @@ vercel
 vercel --prod
 ```
 
-#### Backend (Railway - Recommended)
+#### Backend (Render.com - Recommended)
 
 ```bash
-cd apps/backend
-railway login
-railway init
-railway add postgresql
-railway variables set JWT_SECRET="your-secret"
-railway up
-railway run pnpm prisma migrate deploy
+# Via Render Dashboard (recommended):
+# 1. Connect GitHub repository
+# 2. Create PostgreSQL database
+# 3. Create Web Service with Docker
+# 4. Add environment variables
+# 5. Auto-deploy on push to main
+
+# Or via Render CLI:
+render login
+render services create --name meeting-backend --type web
+render deploy
 ```
 
 ## CI/CD Workflow
@@ -354,13 +358,14 @@ railway run pnpm prisma migrate deploy
 VERCEL_TOKEN=<token>
 VERCEL_ORG_ID=<org-id>
 VERCEL_PROJECT_ID=<project-id>
-PRODUCTION_API_URL=https://your-backend.railway.app
+PRODUCTION_API_URL=https://your-backend.onrender.com
 
 # Backend Deployment (choose one)
-RAILWAY_TOKEN=<token>          # Railway
-RENDER_DEPLOY_HOOK_URL=<url>  # Render
-FLY_API_TOKEN=<token>          # Fly.io
-FLY_APP_NAME=<app-name>        # Fly.io
+RENDER_API_KEY=<api-key>              # Render (recommended)
+RENDER_SERVICE_ID=<service-id>        # Render
+RAILWAY_TOKEN=<token>                 # Railway
+FLY_API_TOKEN=<token>                 # Fly.io
+FLY_APP_NAME=<app-name>               # Fly.io
 ```
 
 ## Architecture Overview
@@ -374,7 +379,7 @@ FLY_APP_NAME=<app-name>        # Fly.io
 │                                                      │
 │  ┌──────────────┐         ┌──────────────┐         │
 │  │   Frontend   │         │   Backend    │         │
-│  │   (Vercel)   │◄───────►│  (Railway)   │         │
+│  │   (Vercel)   │◄───────►│  (Render)    │         │
 │  │              │  HTTPS  │              │         │
 │  │  Next.js App │         │ Express API  │         │
 │  └──────────────┘         └───────┬──────┘         │
