@@ -85,7 +85,7 @@ export default function EditMeetingPage() {
           status: data.status,
           notes: data.notes || '',
         });
-      } catch (error) {
+      } catch {
         toast.error('Failed to load meeting');
         router.push('/dashboard');
       } finally {
@@ -112,7 +112,7 @@ export default function EditMeetingPage() {
 
       toast.success('Meeting updated successfully!');
       router.push('/dashboard');
-    } catch (error) {
+    } catch {
       toast.error('Failed to update meeting');
       setIsSaving(false);
     }
@@ -127,7 +127,7 @@ export default function EditMeetingPage() {
       await apiClient.deleteMeeting(meetingId);
       toast.success('Meeting deleted successfully!');
       router.push('/dashboard');
-    } catch (error) {
+    } catch {
       toast.error('Failed to delete meeting');
     }
   };

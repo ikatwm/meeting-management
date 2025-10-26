@@ -39,7 +39,7 @@ export default function CandidateSummaryPage() {
       setCandidate(candidateData);
       setMeetings(meetingsData.data);
       setHistory(historyData);
-    } catch (error) {
+    } catch {
       toast.error('Failed to load candidate data');
       router.push('/dashboard');
     } finally {
@@ -59,8 +59,8 @@ export default function CandidateSummaryPage() {
       });
       toast.success('Feedback saved successfully!');
       setIsFeedbackModalOpen(false);
-      loadCandidateData();
-    } catch (error) {
+      await loadCandidateData();
+    } catch {
       toast.error('Failed to save feedback');
     } finally {
       setIsSavingFeedback(false);
@@ -75,8 +75,8 @@ export default function CandidateSummaryPage() {
     try {
       await apiClient.deleteMeeting(meetingId);
       toast.success('Meeting cancelled successfully!');
-      loadCandidateData();
-    } catch (error) {
+      await loadCandidateData();
+    } catch {
       toast.error('Failed to cancel meeting');
     }
   };
@@ -90,7 +90,7 @@ export default function CandidateSummaryPage() {
       await apiClient.deleteCandidate(candidateId);
       toast.success('Candidate deleted successfully!');
       router.push('/candidates');
-    } catch (error) {
+    } catch {
       toast.error('Failed to delete candidate');
     }
   };

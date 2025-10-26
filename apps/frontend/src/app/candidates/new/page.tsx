@@ -26,12 +26,12 @@ export default function NewCandidatePage() {
       const candidate = await apiClient.createCandidate(data);
       toast.success('Candidate created successfully!');
       router.push(`/candidates/${candidate.id}`);
-    } catch (error: any) {
-      if (error.message?.includes('already exists')) {
-        toast.error('A candidate with this email already exists');
-      } else {
-        toast.error('Failed to create candidate');
-      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error && error.message?.includes('already exists')
+          ? 'A candidate with this email already exists'
+          : 'Failed to create candidate';
+      toast.error(errorMessage);
       setIsLoading(false);
     }
   };

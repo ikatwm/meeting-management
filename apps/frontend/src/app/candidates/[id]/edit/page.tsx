@@ -24,7 +24,7 @@ export default function EditCandidatePage() {
         setIsLoading(true);
         const data = await apiClient.getCandidateById(candidateId);
         setCandidate(data);
-      } catch (error) {
+      } catch {
         toast.error('Failed to load candidate');
         router.push('/candidates');
       } finally {
@@ -48,7 +48,7 @@ export default function EditCandidatePage() {
       await apiClient.updateCandidate(candidateId, data);
       toast.success('Candidate updated successfully!');
       router.push(`/candidates/${candidateId}`);
-    } catch (error) {
+    } catch {
       toast.error('Failed to update candidate');
       setIsSaving(false);
     }

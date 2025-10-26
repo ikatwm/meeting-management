@@ -58,7 +58,7 @@ export default function NewMeetingPage() {
     try {
       const data = await apiClient.getCandidates({ limit: 100 });
       setCandidates(data.data);
-    } catch (error) {
+    } catch {
       toast.error('Failed to load candidates');
     }
   }, []);
@@ -82,12 +82,12 @@ export default function NewMeetingPage() {
       await loadCandidates();
       setValue('candidateId', newCandidate.id.toString());
       setIsNewCandidateModalOpen(false);
-    } catch (error: any) {
-      if (error.message?.includes('already exists')) {
-        toast.error('A candidate with this email already exists');
-      } else {
-        toast.error('Failed to create candidate');
-      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error && error.message?.includes('already exists')
+          ? 'A candidate with this email already exists'
+          : 'Failed to create candidate';
+      toast.error(errorMessage);
     } finally {
       setIsCreatingCandidate(false);
     }
@@ -114,7 +114,7 @@ export default function NewMeetingPage() {
 
       toast.success('Meeting scheduled successfully!');
       router.push('/dashboard');
-    } catch (error) {
+    } catch {
       toast.error('Failed to create meeting');
       setIsLoading(false);
     }
