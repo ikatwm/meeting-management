@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd ../.. && pnpm nx build frontend --configuration=production",
+  "buildCommand": "cd ../.. && pnpm nx build frontend --configuration=production --skip-nx-cache",
   "outputDirectory": "../../dist/apps/frontend",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
   "framework": "nextjs",
