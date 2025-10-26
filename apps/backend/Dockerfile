@@ -28,11 +28,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/apps/backend/node_modules ./apps/backend/node_modules
 
-# Copy source code
+# Copy source code (includes prisma directory)
 COPY . .
 
-# Copy Prisma schema and generate client
-COPY apps/backend/prisma ./apps/backend/prisma
+# Generate Prisma client
 RUN cd apps/backend && pnpm prisma generate
 
 # Build the backend application
