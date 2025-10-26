@@ -1,0 +1,2710 @@
+{
+  "info": {
+    "_postman_id": "fc136ef6-5472-4dde-8f0c-294e66f70bfd",
+    "name": "Meeting Manager",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29169942"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"sarah@company.com\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{api_base_url}}/api/auth/login",
+              "host": ["{{api_base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": [
+            {
+              "name": "Login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"sarah@company.com\",\n  \"password\": \"password123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3333/api/auth/login",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3333",
+                  "path": ["api", "auth", "login"]
+                }
+              },
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{api_base_url}}/api/auth/logout",
+              "host": ["{{api_base_url}}"],
+              "path": ["api", "auth", "logout"]
+            }
+          },
+          "response": [
+            {
+              "name": "Logout",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{api_base_url}}/api/auth/logout",
+                  "host": ["{{api_base_url}}"],
+                  "path": ["api", "auth", "logout"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "100;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "100"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "72"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "590"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "37"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"25-71uUsMgZY3FdZp9j1h5YMrBIOgg\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Oct 2025 19:43:28 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Logged out successfully\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Meeting Agenda",
+      "item": [
+        {
+          "name": "Get Meetings",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "If-None-Match",
+                "value": "W/\"a0d-IoE0RrsGsooV6++HQRKTCrFOxGQ\""
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:3000"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:3000/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "url": {
+              "raw": "{{api_base_url}}/api/meetings?page=1&pageSize=10",
+              "host": ["{{api_base_url}}"],
+              "path": ["api", "meetings"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Generated from cURL: curl 'http://localhost:3333/api/meetings?page=1&pageSize=10' \\\n  -H 'Accept: application/json, text/plain, */*' \\\n  -H 'Accept-Language: en-US,en;q=0.9' \\\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE' \\\n  -H 'Connection: keep-alive' \\\n  -H 'DNT: 1' \\\n  -H 'If-None-Match: W/\"a0d-IoE0RrsGsooV6++HQRKTCrFOxGQ\"' \\\n  -H 'Origin: http://localhost:3000' \\\n  -H 'Referer: http://localhost:3000/' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-site' \\\n  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"'"
+          },
+          "response": [
+            {
+              "name": "Get Meetings",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-US,en;q=0.9"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "If-None-Match",
+                    "value": "W/\"a0d-IoE0RrsGsooV6++HQRKTCrFOxGQ\""
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:3000"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:3000/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "url": {
+                  "raw": "{{api_base_url}}/api/meetings?page=1&pageSize=10",
+                  "host": ["{{api_base_url}}"],
+                  "path": ["api", "meetings"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "http://localhost:3000"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "100;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "100"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "79"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "614"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "2573"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"a0d-IoE0RrsGsooV6++HQRKTCrFOxGQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Oct 2025 19:28:01 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"meetings\": [\n        {\n            \"id\": 2,\n            \"title\": \"Phone Screening - Bob Wilson\",\n            \"startTime\": \"2025-11-06T14:00:00.000Z\",\n            \"endTime\": \"2025-11-06T14:30:00.000Z\",\n            \"location\": \"ts\",\n            \"meetingType\": \"zoom\",\n            \"notes\": \"Initial screening call\",\n            \"status\": \"confirmed\",\n            \"userId\": 2,\n            \"candidateId\": 3,\n            \"createdAt\": \"2025-10-25T18:32:13.321Z\",\n            \"updatedAt\": \"2025-10-26T16:46:38.354Z\",\n            \"deletedAt\": null,\n            \"user\": {\n                \"id\": 2,\n                \"name\": \"Sarah Johnson\",\n                \"email\": \"sarah@company.com\"\n            },\n            \"candidate\": {\n                \"id\": 3,\n                \"name\": \"Bob Wilson\",\n                \"email\": \"bob@example.com\"\n            },\n            \"participants\": []\n        },\n        {\n            \"id\": 1,\n            \"title\": \"Technical Interview - Alice Smith\",\n            \"startTime\": \"2025-11-05T10:00:00.000Z\",\n            \"endTime\": \"2025-11-05T11:00:00.000Z\",\n            \"location\": \"Meeting Room A\",\n            \"meetingType\": \"onsite\",\n            \"notes\": \"Focus on React and system design\",\n            \"status\": \"confirmed\",\n            \"userId\": 1,\n            \"candidateId\": 2,\n            \"createdAt\": \"2025-10-25T18:32:13.313Z\",\n            \"updatedAt\": \"2025-10-25T18:32:13.313Z\",\n            \"deletedAt\": null,\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Mike Chen\",\n                \"email\": \"mike@company.com\"\n            },\n            \"candidate\": {\n                \"id\": 2,\n                \"name\": \"Alice Smith\",\n                \"email\": \"alice@example.com\"\n            },\n            \"participants\": [\n                {\n                    \"id\": 3,\n                    \"name\": \"Emily Davis\",\n                    \"email\": \"emily@company.com\"\n                }\n            ]\n        },\n        {\n            \"id\": 5,\n            \"title\": \"DevOps K'Somboon\",\n            \"startTime\": \"2025-10-31T02:00:00.000Z\",\n            \"endTime\": \"2025-10-31T05:00:00.000Z\",\n            \"location\": \"-\",\n            \"meetingType\": \"onsite\",\n            \"notes\": null,\n            \"status\": \"pending\",\n            \"userId\": 2,\n            \"candidateId\": 5,\n            \"createdAt\": \"2025-10-26T18:47:02.996Z\",\n            \"updatedAt\": \"2025-10-26T18:47:02.996Z\",\n            \"deletedAt\": null,\n            \"user\": {\n                \"id\": 2,\n                \"name\": \"Sarah Johnson\",\n                \"email\": \"sarah@company.com\"\n            },\n            \"candidate\": {\n                \"id\": 5,\n                \"name\": \"Somboon\",\n                \"email\": \"somboon.test@test.test\"\n            },\n            \"participants\": []\n        },\n        {\n            \"id\": 3,\n            \"title\": \"Senior Software Engineer - K. Wachiraporn\",\n            \"startTime\": \"2025-10-29T07:05:00.000Z\",\n            \"endTime\": \"2025-10-29T08:05:00.000Z\",\n            \"location\": \"Head Office \",\n            \"meetingType\": \"onsite\",\n            \"notes\": \"Hello Noted\",\n            \"status\": \"pending\",\n            \"userId\": 2,\n            \"candidateId\": 4,\n            \"createdAt\": \"2025-10-26T18:20:53.127Z\",\n            \"updatedAt\": \"2025-10-26T18:20:53.127Z\",\n            \"deletedAt\": null,\n            \"user\": {\n                \"id\": 2,\n                \"name\": \"Sarah Johnson\",\n                \"email\": \"sarah@company.com\"\n            },\n            \"candidate\": {\n                \"id\": 4,\n                \"name\": \"Wachiraporn\",\n                \"email\": \"wachiraporn.test@test.test\"\n            },\n            \"participants\": []\n        },\n        {\n            \"id\": 6,\n            \"title\": \"Frontend K'Samui\",\n            \"startTime\": \"2025-10-29T06:00:00.000Z\",\n            \"endTime\": \"2025-10-29T07:00:00.000Z\",\n            \"location\": \"Amazon\",\n            \"meetingType\": \"onsite\",\n            \"notes\": null,\n            \"status\": \"pending\",\n            \"userId\": 2,\n            \"candidateId\": 7,\n            \"createdAt\": \"2025-10-26T19:21:49.489Z\",\n            \"updatedAt\": \"2025-10-26T19:21:49.489Z\",\n            \"deletedAt\": null,\n            \"user\": {\n                \"id\": 2,\n                \"name\": \"Sarah Johnson\",\n                \"email\": \"sarah@company.com\"\n            },\n            \"candidate\": {\n                \"id\": 7,\n                \"name\": \"Samui\",\n                \"email\": \"samui.test@test.test\"\n            },\n            \"participants\": []\n        }\n    ],\n    \"pagination\": {\n        \"total\": 5,\n        \"page\": 1,\n        \"pageSize\": 10,\n        \"totalPages\": 1\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Meeting By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "If-None-Match",
+                "value": "W/\"1e8-SX+zfdbYJ1e3HqwuoPvWTMnR+sk\""
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:3000"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:3000/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "url": {
+              "raw": "{{api_base_url}}/api/meetings/:id",
+              "host": ["{{api_base_url}}"],
+              "path": ["api", "meetings", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "2"
+                }
+              ]
+            },
+            "description": "Generated from cURL: curl 'http://localhost:3333/api/meetings/2' \\\n  -H 'Accept: application/json, text/plain, */*' \\\n  -H 'Accept-Language: en-US,en;q=0.9' \\\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE' \\\n  -H 'Connection: keep-alive' \\\n  -H 'DNT: 1' \\\n  -H 'If-None-Match: W/\"1e8-SX+zfdbYJ1e3HqwuoPvWTMnR+sk\"' \\\n  -H 'Origin: http://localhost:3000' \\\n  -H 'Referer: http://localhost:3000/' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-site' \\\n  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"'"
+          },
+          "response": [
+            {
+              "name": "Get Meeting By ID",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-US,en;q=0.9"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "If-None-Match",
+                    "value": "W/\"1e8-SX+zfdbYJ1e3HqwuoPvWTMnR+sk\""
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:3000"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:3000/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "url": {
+                  "raw": "{{api_base_url}}/api/meetings/:id",
+                  "host": ["{{api_base_url}}"],
+                  "path": ["api", "meetings", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "http://localhost:3000"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "100;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "100"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "76"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "557"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "name": "Content-Type",
+                  "description": "",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "488"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1e8-SX+zfdbYJ1e3HqwuoPvWTMnR+sk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Oct 2025 19:28:58 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"id\": 2,\n    \"title\": \"Phone Screening - Bob Wilson\",\n    \"startTime\": \"2025-11-06T14:00:00.000Z\",\n    \"endTime\": \"2025-11-06T14:30:00.000Z\",\n    \"location\": \"ts\",\n    \"meetingType\": \"zoom\",\n    \"notes\": \"Initial screening call\",\n    \"status\": \"confirmed\",\n    \"userId\": 2,\n    \"candidateId\": 3,\n    \"createdAt\": \"2025-10-25T18:32:13.321Z\",\n    \"updatedAt\": \"2025-10-26T16:46:38.354Z\",\n    \"deletedAt\": null,\n    \"user\": {\n        \"id\": 2,\n        \"name\": \"Sarah Johnson\",\n        \"email\": \"sarah@company.com\"\n    },\n    \"candidate\": {\n        \"id\": 3,\n        \"name\": \"Bob Wilson\",\n        \"email\": \"bob@example.com\"\n    },\n    \"participants\": []\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Meeting",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:3000"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:3000/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"K'Bob Frontend\",\n    \"candidateId\": 3,\n    \"startTime\": \"2025-10-27T02:00:00.000Z\",\n    \"endTime\": \"2025-10-27T03:00:00.000Z\",\n    \"location\": \"HO\",\n    \"meetingType\": \"onsite\",\n    \"status\": \"confirmed\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/api/meetings",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3333",
+              "path": ["api", "meetings"]
+            },
+            "description": "Generated from cURL: curl 'http://localhost:3333/api/meetings' \\\n  -H 'Accept: application/json, text/plain, */*' \\\n  -H 'Accept-Language: en-US,en;q=0.9' \\\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Content-Type: application/json' \\\n  -H 'DNT: 1' \\\n  -H 'Origin: http://localhost:3000' \\\n  -H 'Referer: http://localhost:3000/' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-site' \\\n  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"' \\\n  --data-raw $'{\"title\":\"K\\'Bob Frontend\",\"candidateId\":3,\"startTime\":\"2025-10-27T02:00:00.000Z\",\"endTime\":\"2025-10-27T03:00:00.000Z\",\"location\":\"HO\",\"meetingType\":\"onsite\",\"status\":\"confirmed\"}'"
+          },
+          "response": [
+            {
+              "name": "Create Meeting",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-US,en;q=0.9"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:3000"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:3000/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"K'Bob Frontend\",\n    \"candidateId\": 3,\n    \"startTime\": \"2025-10-27T02:00:00.000Z\",\n    \"endTime\": \"2025-10-27T03:00:00.000Z\",\n    \"location\": \"HO\",\n    \"meetingType\": \"onsite\",\n    \"status\": \"confirmed\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3333/api/meetings",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3333",
+                  "path": ["api", "meetings"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "http://localhost:3000"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "100;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "100"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "66"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "416"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "name": "Content-Type",
+                  "description": "",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "456"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1c8-ub150NQSlj0aUD5gJZko645CpOg\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Oct 2025 19:31:19 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 8,\n    \"title\": \"K'Bob Frontend\",\n    \"startTime\": \"2025-10-27T02:00:00.000Z\",\n    \"endTime\": \"2025-10-27T03:00:00.000Z\",\n    \"location\": \"HO\",\n    \"meetingType\": \"onsite\",\n    \"notes\": null,\n    \"status\": \"confirmed\",\n    \"userId\": 2,\n    \"candidateId\": 3,\n    \"createdAt\": \"2025-10-26T19:31:19.426Z\",\n    \"updatedAt\": \"2025-10-26T19:31:19.426Z\",\n    \"deletedAt\": null,\n    \"user\": {\n        \"id\": 2,\n        \"name\": \"Sarah Johnson\",\n        \"email\": \"sarah@company.com\"\n    },\n    \"candidate\": {\n        \"id\": 3,\n        \"name\": \"Bob Wilson\",\n        \"email\": \"bob@example.com\"\n    },\n    \"participants\": []\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Meeting",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:3000"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:3000/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "url": {
+              "raw": "{{api_base_url}}/api/meetings/:id",
+              "host": ["{{api_base_url}}"],
+              "path": ["api", "meetings", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "7"
+                }
+              ]
+            },
+            "description": "Generated from cURL: curl 'http://localhost:3333/api/meetings/8' \\\n  -X 'DELETE' \\\n  -H 'Accept: application/json, text/plain, */*' \\\n  -H 'Accept-Language: en-US,en;q=0.9' \\\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE' \\\n  -H 'Connection: keep-alive' \\\n  -H 'DNT: 1' \\\n  -H 'Origin: http://localhost:3000' \\\n  -H 'Referer: http://localhost:3000/' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-site' \\\n  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"'"
+          },
+          "response": [
+            {
+              "name": "Delete Meeting",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-US,en;q=0.9"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:3000"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:3000/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:3333/api/meetings/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3333",
+                  "path": ["api", "meetings", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "7"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "http://localhost:3000"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "100;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "100"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "54"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "307"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "42"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"2a-W7tv+VJj+9X+bUIMY8ovwBVvGpk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Oct 2025 19:33:08 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Meeting deleted successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Meetings",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "accept-language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "key": "authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTMxMjQsImV4cCI6MTc2MjA5NzkyNH0.l6itSZhh4xCdUfIdBlgvz27r3ff4v0PdnZnLZyqd9n8"
+              },
+              {
+                "key": "content-type",
+                "value": "application/json"
+              },
+              {
+                "key": "dnt",
+                "value": "1"
+              },
+              {
+                "key": "origin",
+                "value": "http://localhost:3000"
+              },
+              {
+                "key": "priority",
+                "value": "u=1, i"
+              },
+              {
+                "key": "referer",
+                "value": "http://localhost:3000/"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              },
+              {
+                "key": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "key": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "key": "sec-fetch-site",
+                "value": "cross-site"
+              },
+              {
+                "key": "user-agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Phone Screening - Bob Wilson\",\n    \"startTime\": \"2025-11-06T14:00:00.000Z\",\n    \"endTime\": \"2025-11-06T14:30:00.000Z\",\n    \"location\": \"ts HO\",\n    \"meetingType\": \"zoom\",\n    \"status\": \"confirmed\",\n    \"notes\": \"Initial screening call\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{api_base_url}}/api/meetings/2",
+              "host": ["{{api_base_url}}"],
+              "path": ["api", "meetings", "2"]
+            },
+            "description": "Generated from cURL: curl 'https://meeting-management-z3b1.onrender.com/api/meetings/2' \\\n  -X 'PUT' \\\n  -H 'accept: application/json, text/plain, */*' \\\n  -H 'accept-language: en-US,en;q=0.9' \\\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTMxMjQsImV4cCI6MTc2MjA5NzkyNH0.l6itSZhh4xCdUfIdBlgvz27r3ff4v0PdnZnLZyqd9n8' \\\n  -H 'content-type: application/json' \\\n  -H 'dnt: 1' \\\n  -H 'origin: http://localhost:3000' \\\n  -H 'priority: u=1, i' \\\n  -H 'referer: http://localhost:3000/' \\\n  -H 'sec-ch-ua: \"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"' \\\n  -H 'sec-fetch-dest: empty' \\\n  -H 'sec-fetch-mode: cors' \\\n  -H 'sec-fetch-site: cross-site' \\\n  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \\\n  --data-raw '{\"title\":\"Phone Screening - Bob Wilson\",\"startTime\":\"2025-11-06T21:00\",\"endTime\":\"2025-11-06T21:30\",\"location\":\"555\",\"meetingType\":\"zoom\",\"status\":\"pending\",\"notes\":\"Initial screening call\"}'"
+          },
+          "response": [
+            {
+              "name": "Update Meetings",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "accept-language",
+                    "value": "en-US,en;q=0.9"
+                  },
+                  {
+                    "key": "authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTMxMjQsImV4cCI6MTc2MjA5NzkyNH0.l6itSZhh4xCdUfIdBlgvz27r3ff4v0PdnZnLZyqd9n8"
+                  },
+                  {
+                    "key": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "dnt",
+                    "value": "1"
+                  },
+                  {
+                    "key": "origin",
+                    "value": "http://localhost:3000"
+                  },
+                  {
+                    "key": "priority",
+                    "value": "u=1, i"
+                  },
+                  {
+                    "key": "referer",
+                    "value": "http://localhost:3000/"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  },
+                  {
+                    "key": "sec-fetch-dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "sec-fetch-mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "sec-fetch-site",
+                    "value": "cross-site"
+                  },
+                  {
+                    "key": "user-agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Phone Screening - Bob Wilson\",\n    \"startTime\": \"2025-11-06T14:00:00.000Z\",\n    \"endTime\": \"2025-11-06T14:30:00.000Z\",\n    \"location\": \"ts HO\",\n    \"meetingType\": \"zoom\",\n    \"status\": \"confirmed\",\n    \"notes\": \"Initial screening call\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{api_base_url}}/api/meetings/:id",
+                  "host": ["{{api_base_url}}"],
+                  "path": ["api", "meetings", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "http://localhost:3000"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "100;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "100"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "72"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "497"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "name": "Content-Type",
+                  "description": "",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "491"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1eb-YaYY2+a2iFBOakOibZ4v6TP4UKU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Oct 2025 19:29:59 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"id\": 2,\n    \"title\": \"Phone Screening - Bob Wilson\",\n    \"startTime\": \"2025-11-06T14:00:00.000Z\",\n    \"endTime\": \"2025-11-06T14:30:00.000Z\",\n    \"location\": \"ts HO\",\n    \"meetingType\": \"zoom\",\n    \"notes\": \"Initial screening call\",\n    \"status\": \"confirmed\",\n    \"userId\": 2,\n    \"candidateId\": 3,\n    \"createdAt\": \"2025-10-25T18:32:13.321Z\",\n    \"updatedAt\": \"2025-10-26T19:29:59.288Z\",\n    \"deletedAt\": null,\n    \"user\": {\n        \"id\": 2,\n        \"name\": \"Sarah Johnson\",\n        \"email\": \"sarah@company.com\"\n    },\n    \"candidate\": {\n        \"id\": 3,\n        \"name\": \"Bob Wilson\",\n        \"email\": \"bob@example.com\"\n    },\n    \"participants\": []\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Candidates",
+      "item": [
+        {
+          "name": "Get Candidates",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "If-None-Match",
+                "value": "W/\"7a0-jsx9JJkBqFOhi0JRzXqL5w7T8so\""
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:3000"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:3000/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "url": {
+              "raw": "{{api_base_url}}/api/candidates?page=1&pageSize=20",
+              "host": ["{{api_base_url}}"],
+              "path": ["api", "candidates"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Generated from cURL: curl 'http://localhost:3333/api/candidates?page=1&pageSize=20' \\\n  -H 'Accept: application/json, text/plain, */*' \\\n  -H 'Accept-Language: en-US,en;q=0.9' \\\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE' \\\n  -H 'Connection: keep-alive' \\\n  -H 'DNT: 1' \\\n  -H 'If-None-Match: W/\"7a0-jsx9JJkBqFOhi0JRzXqL5w7T8so\"' \\\n  -H 'Origin: http://localhost:3000' \\\n  -H 'Referer: http://localhost:3000/' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-site' \\\n  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"'"
+          },
+          "response": [
+            {
+              "name": "Get Candidates",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-US,en;q=0.9"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "If-None-Match",
+                    "value": "W/\"7a0-jsx9JJkBqFOhi0JRzXqL5w7T8so\""
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:3000"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:3000/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "url": {
+                  "raw": "{{api_base_url}}/api/candidates?page=1&pageSize=20",
+                  "host": ["{{api_base_url}}"],
+                  "path": ["api", "candidates"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "http://localhost:3000"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "100;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "100"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "51"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "169"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "1952"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"7a0-jsx9JJkBqFOhi0JRzXqL5w7T8so\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Oct 2025 19:35:26 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"candidates\": [\n        {\n            \"id\": 7,\n            \"name\": \"Samui\",\n            \"email\": \"samui.test@test.test\",\n            \"appliedPositionId\": 1,\n            \"status\": \"applied\",\n            \"interviewNotes\": null,\n            \"createdAt\": \"2025-10-26T19:21:10.507Z\",\n            \"updatedAt\": \"2025-10-26T19:21:10.507Z\",\n            \"appliedPosition\": {\n                \"id\": 1,\n                \"name\": \"Frontend Developer\"\n            }\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Siam\",\n            \"email\": \"siam.test@test.test\",\n            \"appliedPositionId\": 4,\n            \"status\": \"screening\",\n            \"interviewNotes\": null,\n            \"createdAt\": \"2025-10-26T18:46:30.685Z\",\n            \"updatedAt\": \"2025-10-26T18:46:30.685Z\",\n            \"appliedPosition\": {\n                \"id\": 4,\n                \"name\": \"Full Stack Developer\"\n            }\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Somboon\",\n            \"email\": \"somboon.test@test.test\",\n            \"appliedPositionId\": 3,\n            \"status\": \"screening\",\n            \"interviewNotes\": null,\n            \"createdAt\": \"2025-10-26T18:33:53.144Z\",\n            \"updatedAt\": \"2025-10-26T18:33:53.144Z\",\n            \"appliedPosition\": {\n                \"id\": 3,\n                \"name\": \"DevOps Engineer\"\n            }\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Wachiraporn\",\n            \"email\": \"wachiraporn.test@test.test\",\n            \"appliedPositionId\": 5,\n            \"status\": \"applied\",\n            \"interviewNotes\": null,\n            \"createdAt\": \"2025-10-26T18:13:15.655Z\",\n            \"updatedAt\": \"2025-10-26T18:13:15.655Z\",\n            \"appliedPosition\": {\n                \"id\": 5,\n                \"name\": \"Backend Developer\"\n            }\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Bob Wilson\",\n            \"email\": \"bob@example.com\",\n            \"appliedPositionId\": 1,\n            \"status\": \"screening\",\n            \"interviewNotes\": \"Good portfolio, needs technical assessment\",\n            \"createdAt\": \"2025-10-25T18:32:13.243Z\",\n            \"updatedAt\": \"2025-10-25T18:32:13.243Z\",\n            \"appliedPosition\": {\n                \"id\": 1,\n                \"name\": \"Frontend Developer\"\n            }\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Alice Smith\",\n            \"email\": \"alice@example.com\",\n            \"appliedPositionId\": 2,\n            \"status\": \"interview\",\n            \"interviewNotes\": \"Strong technical background in React and TypeScript\",\n            \"createdAt\": \"2025-10-25T18:32:13.231Z\",\n            \"updatedAt\": \"2025-10-25T18:32:13.231Z\",\n            \"appliedPosition\": {\n                \"id\": 2,\n                \"name\": \"Software Engineer\"\n            }\n        },\n        {\n            \"id\": 1,\n            \"name\": \"Carol Martinez\",\n            \"email\": \"carol@example.com\",\n            \"appliedPositionId\": 5,\n            \"status\": \"applied\",\n            \"interviewNotes\": null,\n            \"createdAt\": \"2025-10-25T18:32:13.227Z\",\n            \"updatedAt\": \"2025-10-25T18:32:13.227Z\",\n            \"appliedPosition\": {\n                \"id\": 5,\n                \"name\": \"Backend Developer\"\n            }\n        }\n    ],\n    \"pagination\": {\n        \"total\": 7,\n        \"page\": 1,\n        \"pageSize\": 20,\n        \"totalPages\": 1\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Candidate By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "If-None-Match",
+                "value": "W/\"105-J5iHL2FxzCjJOdmcmaD21mKtSrI\""
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:3000"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:3000/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "url": {
+              "raw": "{{api_base_url}}/api/candidates/:id",
+              "host": ["{{api_base_url}}"],
+              "path": ["api", "candidates", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "4"
+                }
+              ]
+            },
+            "description": "Generated from cURL: curl 'http://localhost:3333/api/candidates/4' \\\n  -H 'Accept: application/json, text/plain, */*' \\\n  -H 'Accept-Language: en-US,en;q=0.9' \\\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE' \\\n  -H 'Connection: keep-alive' \\\n  -H 'DNT: 1' \\\n  -H 'If-None-Match: W/\"105-J5iHL2FxzCjJOdmcmaD21mKtSrI\"' \\\n  -H 'Origin: http://localhost:3000' \\\n  -H 'Referer: http://localhost:3000/' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-site' \\\n  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"'"
+          },
+          "response": [
+            {
+              "name": "Get Candidate By ID",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-US,en;q=0.9"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "If-None-Match",
+                    "value": "W/\"105-J5iHL2FxzCjJOdmcmaD21mKtSrI\""
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:3000"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:3000/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "url": {
+                  "raw": "{{api_base_url}}/api/candidates/:id",
+                  "host": ["{{api_base_url}}"],
+                  "path": ["api", "candidates", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "4"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "http://localhost:3000"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "100;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "100"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "44"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "47"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "261"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"105-J5iHL2FxzCjJOdmcmaD21mKtSrI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Oct 2025 19:37:28 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 4,\n    \"name\": \"Wachiraporn\",\n    \"email\": \"wachiraporn.test@test.test\",\n    \"appliedPositionId\": 5,\n    \"status\": \"applied\",\n    \"interviewNotes\": null,\n    \"createdAt\": \"2025-10-26T18:13:15.655Z\",\n    \"updatedAt\": \"2025-10-26T18:13:15.655Z\",\n    \"appliedPosition\": {\n        \"id\": 5,\n        \"name\": \"Backend Developer\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Candidate",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:3000"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:3000/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "url": {
+              "raw": "{{api_base_url}}/api/candidates/:id?=6",
+              "host": ["{{api_base_url}}"],
+              "path": ["api", "candidates", ":id"],
+              "query": [
+                {
+                  "key": null,
+                  "value": "6"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Generated from cURL: curl 'http://localhost:3333/api/candidates/6' \\\n  -X 'DELETE' \\\n  -H 'Accept: application/json, text/plain, */*' \\\n  -H 'Accept-Language: en-US,en;q=0.9' \\\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE' \\\n  -H 'Connection: keep-alive' \\\n  -H 'DNT: 1' \\\n  -H 'Origin: http://localhost:3000' \\\n  -H 'Referer: http://localhost:3000/' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-site' \\\n  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"'"
+          },
+          "response": [
+            {
+              "name": "Delete Candidate",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-US,en;q=0.9"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:3000"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:3000/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:3333/api/candidates/6",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3333",
+                  "path": ["api", "candidates", "6"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "name": "Content-Type",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"message\": \"Candidate deleted successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Candidate",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:3000"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:3000/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Wachiraporn\",\"email\":\"wachiraporn.test@test.test\",\"appliedPositionId\":5,\"status\":\"applied\",\"interviewNotes\":\"test\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/api/candidates/4",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3333",
+              "path": ["api", "candidates", "4"]
+            },
+            "description": "Generated from cURL: curl 'http://localhost:3333/api/candidates/4' \\\n  -X 'PUT' \\\n  -H 'Accept: application/json, text/plain, */*' \\\n  -H 'Accept-Language: en-US,en;q=0.9' \\\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Content-Type: application/json' \\\n  -H 'DNT: 1' \\\n  -H 'Origin: http://localhost:3000' \\\n  -H 'Referer: http://localhost:3000/' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-site' \\\n  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"' \\\n  --data-raw '{\"name\":\"Wachiraporn\",\"email\":\"wachiraporn.test@test.test\",\"appliedPositionId\":5,\"status\":\"applied\",\"interviewNotes\":\"test\"}'"
+          },
+          "response": [
+            {
+              "name": "Update Candidate",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-US,en;q=0.9"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2FyYWhAY29tcGFueS5jb20iLCJyb2xlIjoiaHIiLCJpYXQiOjE3NjE0OTcwNzAsImV4cCI6MTc2MjEwMTg3MH0.eY1zUp3vcIS4vXAVzLd8TJa8JUvo2Nni6vN6YSPqKFE"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:3000"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:3000/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Not_A Brand\";v=\"99\", \"Chromium\";v=\"142\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Wachiraporn\",\n    \"email\": \"wachiraporn.test@test.test\",\n    \"appliedPositionId\": 5,\n    \"status\": \"applied\",\n    \"interviewNotes\": \"test\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{api_base_url}}/api/candidates/:id",
+                  "host": ["{{api_base_url}}"],
+                  "path": ["api", "candidates", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "4"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "http://localhost:3000"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "100;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "100"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "99"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "900"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "name": "Content-Type",
+                  "description": "",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "263"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"107-RX4scZw1lvvw73THHxJaZQasTnw\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 26 Oct 2025 19:38:19 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"id\": 4,\n    \"name\": \"Wachiraporn\",\n    \"email\": \"wachiraporn.test@test.test\",\n    \"appliedPositionId\": 5,\n    \"status\": \"applied\",\n    \"interviewNotes\": \"test\",\n    \"createdAt\": \"2025-10-26T18:13:15.655Z\",\n    \"updatedAt\": \"2025-10-26T19:38:19.208Z\",\n    \"appliedPosition\": {\n        \"id\": 5,\n        \"name\": \"Backend Developer\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{Token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{api_base_url}}/api/health",
+          "host": ["{{api_base_url}}"],
+          "path": ["api", "health"]
+        }
+      },
+      "response": [
+        {
+          "name": "New Request",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"sarah@company.com\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/api/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3333",
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "_postman_previewlanguage": null,
+          "header": null,
+          "cookie": [],
+          "body": null
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "Token",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
