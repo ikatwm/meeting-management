@@ -33,11 +33,7 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copy source code (includes prisma directory)
 COPY . .
 
-# Generate Prisma client (needs DATABASE_URL env var even though it doesn't connect)
-ENV DATABASE_URL="postgresql://placeholder:placeholder@placeholder:5432/placeholder?schema=public"
-RUN cd apps/backend && pnpm prisma generate
-
-# Build the backend application
+# Build the backend application (Prisma client will be generated at runtime)
 RUN pnpm nx build backend --production
 
 # Stage 3: Production runtime
@@ -61,11 +57,7 @@ COPY --from=builder /app/node_modules ./node_modules
 # Copy package.json for potential runtime needs
 COPY --from=builder /app/apps/backend/package.json ./package.json
 
-# Generate Prisma Client in production (needs placeholder DATABASE_URL for generation)
-ENV DATABASE_URL="postgresql://placeholder:placeholder@placeholder:5432/placeholder?schema=public"
-RUN pnpm prisma generate
-
-# Set runtime environment variables (DATABASE_URL will be overridden at runtime by Render)
+# Set runtime environment variables
 ENV NODE_ENV=production
 ENV PORT=3333
 
@@ -82,10 +74,13 @@ EXPOSE 3333
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD curl -f http://localhost:3333/health || exit 1
 
-# Create startup script for migrations and server
+# Create startup script for Prisma generation, migrations, and server
 COPY --chown=expressjs:nodejs <<'EOF' /app/start.sh
 #!/bin/sh
 set -e
+
+echo "Generating Prisma Client with real DATABASE_URL..."
+pnpm prisma generate
 
 echo "Running database migrations..."
 pnpm prisma migrate deploy
