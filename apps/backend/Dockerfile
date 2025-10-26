@@ -22,14 +22,11 @@ COPY apps/backend/tsconfig*.json ./apps/backend/
 COPY apps/backend/webpack.config.js ./apps/backend/
 
 # Install root and workspace dependencies (root tools + backend app deps)
-# 1) Install root deps for Nx/Webpack caching
-RUN pnpm -w install --frozen-lockfile=false --ignore-scripts=false
-# 2) Explicitly install the backend workspace with all (dev+prod) deps to ensure resolver can find imports during build
-RUN pnpm -w --filter @meeting-management/backend... install --prod=false --no-optional --ignore-scripts=false --frozen-lockfile=false
-# 3) Approve any required native build scripts (pnpm v10 security)
-RUN pnpm approve-builds --auto || true
-# 4) Quick diagnostic to verify critical deps exist (safe no-op if present)
-RUN node -e "require.resolve('zod'); require.resolve('cors'); require.resolve('helmet'); require.resolve('express-rate-limit'); require.resolve('bcryptjs'); require.resolve('jsonwebtoken'); console.log('deps-ok')"
+# First install root deps for Nx/Webpack caching
+RUN pnpm install --frozen-lockfile --ignore-scripts=false
+# Ensure backend package deps (e.g., zod, cors, helmet, bcryptjs, jsonwebtoken) are installed
+# Using filter guarantees the app's direct deps are present even if lockfile was created without them
+RUN pnpm --filter @meeting-management/backend... install --ignore-scripts=false --frozen-lockfile=false
 
 # Stage 2: Build application
 FROM node:20-alpine AS builder
