@@ -8,12 +8,24 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-# Copy package files
-COPY package.json pnpm-lock.yaml* ./
-COPY apps/frontend/package.json ./apps/frontend/
+# Copy workspace configuration files
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml .npmrc ./
+COPY nx.json tsconfig.base.json tsconfig.json ./
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+# Copy ALL app package.json files for proper workspace resolution
+COPY apps/backend/package.json ./apps/backend/
+COPY apps/frontend/package.json ./apps/frontend/
+COPY apps/backend-e2e/package.json ./apps/backend-e2e/
+
+# Copy frontend configuration files
+COPY apps/frontend/tsconfig*.json ./apps/frontend/
+COPY apps/frontend/next.config.js ./apps/frontend/
+
+# Install all workspace dependencies (includes frontend, Nx tools, and shared deps)
+RUN pnpm install --frozen-lockfile --ignore-scripts=false
+# Ensure frontend package deps (e.g., date-fns, react-hot-toast, next-auth) are installed
+# Using filter guarantees the app's direct deps are present even if lockfile was created without them
+RUN pnpm --filter @meeting-management/frontend... install --ignore-scripts=false --frozen-lockfile=false
 
 # Stage 2: Build application
 FROM node:20-alpine AS builder
@@ -26,6 +38,8 @@ WORKDIR /app
 
 # Copy dependencies from deps stage (pnpm workspace: all deps in root node_modules)
 COPY --from=deps /app/node_modules ./node_modules
+# Also copy the frontend package-level node_modules needed with pnpm's isolated linker
+COPY --from=deps /app/apps/frontend/node_modules ./apps/frontend/node_modules
 
 # Copy source code
 COPY . .

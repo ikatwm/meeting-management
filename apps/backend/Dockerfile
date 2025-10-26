@@ -61,20 +61,17 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 expressjs
 
-# Copy necessary files from builder
-COPY --from=builder /app/apps/backend/dist ./dist
-COPY --from=builder /app/apps/backend/prisma ./prisma
-COPY --from=builder /app/node_modules ./node_modules
+# Copy necessary files from builder with ownership (much faster than chown -R)
+COPY --from=builder --chown=expressjs:nodejs /app/apps/backend/dist ./dist
+COPY --from=builder --chown=expressjs:nodejs /app/apps/backend/prisma ./prisma
+COPY --from=builder --chown=expressjs:nodejs /app/node_modules ./node_modules
 
 # Copy package.json for potential runtime needs
-COPY --from=builder /app/apps/backend/package.json ./package.json
+COPY --from=builder --chown=expressjs:nodejs /app/apps/backend/package.json ./package.json
 
 # Set runtime environment variables
 ENV NODE_ENV=production
 ENV PORT=3333
-
-# Change ownership to non-root user
-RUN chown -R expressjs:nodejs /app
 
 # Switch to non-root user
 USER expressjs
