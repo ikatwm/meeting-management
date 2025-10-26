@@ -13,14 +13,16 @@ Complete step-by-step instructions for deploying the Meeting Manager application
 
 ## Overview
 
+> **Note:** This guide provides Railway-specific deployment instructions. For **Render.com deployment (recommended)**, see [QUICK_START.md](QUICK_START.md) or [DEPLOYMENT.md](DEPLOYMENT.md).
+
 **Architecture:**
 
 - Frontend: Next.js 15 → Vercel
-- Backend: Express.js → Railway (recommended)
-- Database: PostgreSQL → Managed service (Neon/Railway)
+- Backend: Express.js → Render (recommended) or Railway
+- Database: PostgreSQL → Managed service (Render/Neon/Railway)
 - CI/CD: GitHub Actions
 
-**Estimated Time:** 20-30 minutes
+**Estimated Time:** 20-30 minutes (Railway-specific instructions below)
 
 ## Prerequisites
 

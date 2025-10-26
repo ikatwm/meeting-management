@@ -74,21 +74,22 @@ JWT_SECRET=test-secret-key-for-ci-pipeline
 VERCEL_TOKEN=<your-vercel-token>
 VERCEL_ORG_ID=<your-vercel-org-id>
 VERCEL_PROJECT_ID=<your-vercel-project-id>
-PRODUCTION_API_URL=https://your-backend-url.railway.app
+PRODUCTION_API_URL=https://your-backend-url.onrender.com
 ```
 
 **Backend Deployment (choose one):**
+
+Render (Recommended):
+
+```
+RENDER_API_KEY=<your-render-api-key>
+RENDER_SERVICE_ID=<your-render-service-id>
+```
 
 Railway:
 
 ```
 RAILWAY_TOKEN=<your-railway-token>
-```
-
-Render:
-
-```
-RENDER_DEPLOY_HOOK_URL=<your-render-deploy-hook-url>
 ```
 
 Fly.io:
@@ -373,9 +374,21 @@ audit-level: moderate
 
 **Options**: Uncomment for automation
 
+- Render (Recommended)
 - Railway
-- Render
 - Fly.io
+
+Example Render deployment:
+
+```yaml
+deploy-backend-render:
+  name: Deploy Backend to Render
+  runs-on: ubuntu-latest
+  steps:
+    - name: Trigger Render Deploy
+      run: |
+        curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+```
 
 Example Railway deployment:
 
@@ -410,6 +423,21 @@ deploy-backend-railway:
    cat .vercel/project.json
    ```
 
+#### Render API Key (Recommended)
+
+1. Go to https://dashboard.render.com/u/settings#api-keys
+2. Click "Create API Key"
+3. Copy the API key
+4. Get your service ID from the service's "Settings" tab on Render
+
+Or use Deploy Hook:
+
+1. Go to Render dashboard
+2. Select your service
+3. Settings → Deploy Hooks
+4. Create deploy hook
+5. Copy URL
+
 #### Railway Token
 
 ```bash
@@ -419,14 +447,6 @@ railway login
 # Create token in dashboard
 # Settings → Tokens → Create Token
 ```
-
-#### Render Deploy Hook
-
-1. Go to Render dashboard
-2. Select your service
-3. Settings → Deploy Hooks
-4. Create deploy hook
-5. Copy URL
 
 #### Fly.io Token
 
