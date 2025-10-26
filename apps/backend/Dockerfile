@@ -33,7 +33,8 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copy source code (includes prisma directory)
 COPY . .
 
-# Generate Prisma client
+# Generate Prisma client (needs DATABASE_URL env var even though it doesn't connect)
+ENV DATABASE_URL="postgresql://placeholder:placeholder@placeholder:5432/placeholder?schema=public"
 RUN cd apps/backend && pnpm prisma generate
 
 # Build the backend application
@@ -60,10 +61,11 @@ COPY --from=builder /app/node_modules ./node_modules
 # Copy package.json for potential runtime needs
 COPY --from=builder /app/apps/backend/package.json ./package.json
 
-# Generate Prisma Client in production
+# Generate Prisma Client in production (needs placeholder DATABASE_URL for generation)
+ENV DATABASE_URL="postgresql://placeholder:placeholder@placeholder:5432/placeholder?schema=public"
 RUN pnpm prisma generate
 
-# Set environment variables
+# Set runtime environment variables (DATABASE_URL will be overridden at runtime by Render)
 ENV NODE_ENV=production
 ENV PORT=3333
 
