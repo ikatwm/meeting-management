@@ -1,0 +1,55 @@
+# Dependencies
+node_modules
+**/node_modules
+
+# Testing
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+**/__tests__
+**/__mocks__
+coverage
+.nyc_output
+
+# Development
+*.log
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Build artifacts (Vercel will rebuild)
+.next
+.vercel
+dist
+out
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.sublime-*
+
+# Nx cache
+.nx
+
+# Documentation
+*.md
+docs/
+
+# E2E tests
+**/backend-e2e/**
+e2e/
+cypress/
+
+# Backend files (not needed for frontend deployment)
+**/backend/**
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore

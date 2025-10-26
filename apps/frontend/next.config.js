@@ -10,6 +10,14 @@ const nextConfig = {
   // Use this to set Nx-specific options
   // See: https://nx.dev/recipes/next/next-config-setup
   nx: {},
+  // Enable standalone output for optimized production builds
+  output: 'standalone',
+  // Optimize for smaller bundle size
+  experimental: {
+    outputFileTracingRoot: require('path').join(__dirname, '../..'),
+  },
+  // Reduce bundle size by excluding source maps in production
+  productionBrowserSourceMaps: false,
 };
 
 const plugins = [
@@ -17,10 +25,4 @@ const plugins = [
   withNx,
 ];
 
-// Enable standalone output for Docker deployments
-const productionConfig = {
-  ...nextConfig,
-  output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
-};
-
-module.exports = composePlugins(...plugins)(productionConfig);
+module.exports = composePlugins(...plugins)(nextConfig);
