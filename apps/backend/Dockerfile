@@ -62,7 +62,7 @@ RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 expressjs
 
 # Copy necessary files from builder
-COPY --from=builder /app/dist/apps/backend ./dist
+COPY --from=builder /app/apps/backend/dist ./dist
 COPY --from=builder /app/apps/backend/prisma ./prisma
 COPY --from=builder /app/node_modules ./node_modules
 
