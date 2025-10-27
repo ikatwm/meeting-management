@@ -15,17 +15,22 @@ export const loginSchema = z.object({
 });
 
 // Meeting Validation Schemas
-export const createMeetingSchema = z.object({
-  title: z.string().min(1, 'Title is required').max(255),
-  startTime: z.iso.datetime('Invalid start time format'),
-  endTime: z.iso.datetime('Invalid end time format'),
-  location: z.string().max(255).optional(),
-  meetingType: z.enum(['onsite', 'zoom', 'google_meet']),
-  notes: z.string().optional(),
-  status: z.enum(['confirmed', 'pending']),
-  candidateId: z.number().int().min(1, 'Candidate ID must be positive').optional(),
-  participantIds: z.array(z.number().int().min(1, 'User ID must be positive')).optional(),
-});
+export const createMeetingSchema = z
+  .object({
+    title: z.string().min(1, 'Title is required').max(255),
+    startTime: z.iso.datetime('Invalid start time format'),
+    endTime: z.iso.datetime('Invalid end time format'),
+    location: z.string().max(255).optional(),
+    meetingType: z.enum(['onsite', 'zoom', 'google_meet']),
+    notes: z.string().optional(),
+    status: z.enum(['confirmed', 'pending']),
+    candidateId: z.number().int().min(1, 'Candidate ID must be positive').optional(),
+    participantIds: z.array(z.number().int().min(1, 'User ID must be positive')).optional(),
+  })
+  .refine((data) => new Date(data.endTime) > new Date(data.startTime), {
+    message: 'End time must be after start time',
+    path: ['endTime'],
+  });
 
 export const updateMeetingSchema = createMeetingSchema.partial();
 

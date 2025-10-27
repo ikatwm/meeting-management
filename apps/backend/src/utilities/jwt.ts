@@ -15,11 +15,14 @@ export function verifyToken(token: string): JwtPayload {
     const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
     return decoded;
   } catch (error) {
-    if (error instanceof jwt.JsonWebTokenError) {
-      throw new Error('Invalid token');
-    }
-    if (error instanceof jwt.TokenExpiredError) {
-      throw new Error('Token expired');
+    // Check error type by name (works better with mocks and across module boundaries)
+    if (error && typeof error === 'object' && 'name' in error) {
+      if (error.name === 'TokenExpiredError') {
+        throw new Error('Token expired');
+      }
+      if (error.name === 'JsonWebTokenError') {
+        throw new Error('Invalid token');
+      }
     }
     throw new Error('Token verification failed');
   }
