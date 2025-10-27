@@ -1,6 +1,5 @@
-import type { Config } from 'jest';
-
-const config: Config = {
+/** @type {import('jest').Config} */
+const config = {
   displayName: 'backend',
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
@@ -9,6 +8,7 @@ const config: Config = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/apps/backend',
+  coverageReporters: ['text', 'lcov', 'json'],
   collectCoverageFrom: [
     'src/**/*.ts',
     '!src/**/*.spec.ts',
@@ -63,4 +63,4 @@ const config: Config = {
   restoreMocks: true,
 };
 
-export default config;
+module.exports = config;

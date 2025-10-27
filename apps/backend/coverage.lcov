@@ -1,0 +1,1346 @@
+PASS backend src/collections/__tests__/candidates.test.ts
+  Candidates Collection
+    createCandidate
+      ✓ should create a candidate with all fields (7 ms)
+      ✓ should create a candidate without optional interviewNotes (1 ms)
+      ✓ should handle database constraint error (13 ms)
+    findCandidates
+      ✓ should return paginated candidates with default parameters (1 ms)
+      ✓ should handle pagination correctly (1 ms)
+      ✓ should filter by search term in name (1 ms)
+      ✓ should filter by search term in email (1 ms)
+      ✓ should filter by status
+      ✓ should filter by both search and status
+      ✓ should return empty array when no candidates found
+      ✓ should handle custom page size
+    findCandidateById
+      ✓ should find candidate by ID (1 ms)
+      ✓ should return null when candidate not found
+    updateCandidate
+      ✓ should update candidate with all fields
+      ✓ should update only status field
+      ✓ should handle update of non-existent candidate (1 ms)
+    deleteCandidate
+      ✓ should delete candidate by ID
+      ✓ should handle deletion of non-existent candidate
+    findCandidateByEmail
+      ✓ should find candidate by email
+      ✓ should return null when email not found
+      ✓ should handle email case sensitivity correctly
+
+PASS backend src/collections/__tests__/users.test.ts
+  Users Collection
+    createUser
+      ✓ should create user with all fields including positionId (6 ms)
+      ✓ should create user without positionId
+      ✓ should hash password before storing (1 ms)
+      ✓ should handle all role types
+      ✓ should not include passwordHash in response (1 ms)
+      ✓ should handle duplicate email error (21 ms)
+      ✓ should handle invalid positionId foreign key error (1 ms)
+    findUserByEmail
+      ✓ should find user by email including passwordHash
+      ✓ should return null when user not found
+      ✓ should handle email case sensitivity
+      ✓ should handle database error (1 ms)
+      ✓ should find user with null positionId
+      ✓ should find user with null lastLogin
+    findUserById
+      ✓ should find user by ID with position details (1 ms)
+      ✓ should not include passwordHash in response
+      ✓ should return null when user not found
+      ✓ should find user without position
+      ✓ should handle database error
+      ✓ should handle zero ID
+      ✓ should handle negative ID
+    updateUserLastLogin
+      ✓ should update user last login timestamp (1 ms)
+      ✓ should update from null to timestamp
+      ✓ should update existing lastLogin timestamp
+      ✓ should handle update of non-existent user
+      ✓ should handle database error (1 ms)
+      ✓ should create timestamp at time of call
+      ✓ should handle multiple consecutive updates
+
+PASS backend src/collections/__tests__/meetings.test.ts
+  Meetings Collection
+    createMeeting
+      ✓ should create meeting with all fields including participants (6 ms)
+      ✓ should create meeting without optional fields
+      ✓ should create meeting without participants
+      ✓ should handle all meeting types (1 ms)
+      ✓ should handle database error during creation (13 ms)
+    findMeetings
+      ✓ should find meetings with pagination (1 ms)
+      ✓ should exclude soft-deleted meetings by default (1 ms)
+      ✓ should include soft-deleted meetings when requested (2 ms)
+      ✓ should handle pagination correctly
+      ✓ should return empty array when no meetings found (1 ms)
+      ✓ should order by startTime descending
+    findMeetingById
+      ✓ should find meeting by ID with all relations (1 ms)
+      ✓ should return null when meeting not found
+      ✓ should find soft-deleted meeting (1 ms)
+    updateMeeting
+      ✓ should update meeting with all fields (5 ms)
+      ✓ should update only specific fields (1 ms)
+      ✓ should not update participantIds through this function (2 ms)
+      ✓ should handle update of non-existent meeting
+    softDeleteMeeting
+      ✓ should soft delete meeting by setting deletedAt timestamp (1 ms)
+      ✓ should handle soft delete of non-existent meeting
+      ✓ should soft delete already deleted meeting
+    hardDeleteMeeting
+      ✓ should permanently delete meeting
+      ✓ should handle hard delete of non-existent meeting
+      ✓ should handle cascade delete constraints (1 ms)
+
+PASS backend src/utilities/__tests__/validation.test.ts
+  Validation Schemas
+    registerSchema
+      ✓ should validate correct registration data (2 ms)
+      ✓ should reject invalid email (12 ms)
+      ✓ should reject short password (1 ms)
+      ✓ should reject invalid role
+    loginSchema
+      ✓ should validate correct login data
+      ✓ should reject invalid email (1 ms)
+    createMeetingSchema
+      ✓ should validate correct meeting data
+      ✓ should reject invalid meeting type (1 ms)
+    createCandidateSchema
+      ✓ should validate correct candidate data
+      ✓ should reject invalid email
+    paginationSchema
+      ✓ should validate correct pagination data (1 ms)
+      ✓ should use default values when not provided (1 ms)
+      ✓ should coerce string numbers to integers
+      ✓ should reject page size over 100 (1 ms)
+
+PASS backend src/collections/__tests__/positions.test.ts
+  Positions Collection
+    findAllPositions
+      ✓ should find all positions ordered by name ascending
+      ✓ should return empty array when no positions exist
+      ✓ should order positions alphabetically (1 ms)
+      ✓ should handle database error (7 ms)
+      ✓ should handle single position
+      ✓ should handle positions with same name prefix
+      ✓ should handle positions with special characters
+    findAllAppliedPositions
+      ✓ should find all applied positions ordered by name ascending (1 ms)
+      ✓ should return empty array when no applied positions exist
+      ✓ should order applied positions alphabetically
+      ✓ should handle database error
+      ✓ should handle large number of applied positions (1 ms)
+      ✓ should handle applied positions with duplicate-like names
+    findPositionById
+      ✓ should find position by ID
+      ✓ should return null when position not found
+      ✓ should handle database error
+      ✓ should handle zero ID
+      ✓ should handle negative ID
+      ✓ should find position with special characters in name
+    findAppliedPositionById
+      ✓ should find applied position by ID
+      ✓ should return null when applied position not found
+      ✓ should handle database error
+      ✓ should handle zero ID
+      ✓ should handle negative ID
+      ✓ should find applied position with long name
+      ✓ should handle consecutive ID queries
+
+PASS backend src/utilities/__tests__/middleware.test.ts
+  Middleware
+    authMiddleware
+      ✓ should authenticate valid token with Bearer prefix (1 ms)
+      ✓ should authenticate valid token without Bearer prefix
+      ✓ should return 401 when no authorization header provided (1 ms)
+      ✓ should return 401 when authorization header is empty string
+      ✓ should return 401 when token verification fails with Error
+      ✓ should return 401 with generic message when token verification fails with non-Error
+      ✓ should handle malformed JWT token
+      ✓ should properly extract token after "Bearer " prefix with extra spaces (1 ms)
+    errorHandler
+      ✓ should handle error with default 500 status code
+      ✓ should use existing status code if not 200
+      ✓ should include custom error name
+      ✓ should use default message when error message is empty
+      ✓ should include stack trace in development environment (1 ms)
+      ✓ should not include stack trace in production environment
+      ✓ should handle error without stack trace
+      ✓ should handle error with status code 401
+      ✓ should handle error with status code 403
+      ✓ should handle error with status code 404
+      ✓ should log error to console
+
+PASS backend src/collections/__tests__/participants.test.ts
+  Participants Collection
+    addParticipant
+      ✓ should add participant to meeting
+      ✓ should handle adding multiple participants to same meeting
+      ✓ should handle duplicate participant error (5 ms)
+      ✓ should handle non-existent user ID
+      ✓ should handle non-existent meeting ID (1 ms)
+      ✓ should include user details in response
+      ✓ should handle zero meeting ID
+      ✓ should handle negative user ID
+    removeParticipant
+      ✓ should remove participant from meeting
+      ✓ should handle removing non-existent participant
+      ✓ should handle removing participant from non-existent meeting
+      ✓ should use composite key for deletion
+      ✓ should handle database connection error
+      ✓ should handle removing same participant twice
+    findParticipantsByMeetingId
+      ✓ should find all participants for a meeting
+      ✓ should return empty array when meeting has no participants (1 ms)
+      ✓ should include user details for each participant
+      ✓ should handle meeting with single participant
+      ✓ should handle meeting with many participants
+      ✓ should handle database error
+      ✓ should handle zero meeting ID
+      ✓ should handle negative meeting ID
+
+PASS backend src/endpoints/__tests__/positions.test.ts
+  Positions Endpoints Integration Tests
+    GET /api/positions
+      ✓ should return all positions successfully (42 ms)
+      ✓ should return empty array when no positions exist (29 ms)
+      ✓ should return 401 without authentication token (51 ms)
+      ✓ should return 401 with invalid token (5 ms)
+      ✓ should return 500 if database operation fails (3 ms)
+      ✓ should work for different user roles (hr, manager, staff) (3 ms)
+      ✓ should not expose internal database fields (3 ms)
+    GET /api/positions/applied
+      ✓ should return all applied positions successfully (1 ms)
+      ✓ should return empty array when no applied positions exist (2 ms)
+      ✓ should return 401 without authentication token (3 ms)
+      ✓ should return 401 with invalid token (3 ms)
+      ✓ should return 500 if database operation fails (3 ms)
+      ✓ should work for different user roles (31 ms)
+      ✓ should not expose internal database fields (4 ms)
+    Edge Cases
+      ✓ should handle positions with special characters in names (3 ms)
+      ✓ should handle concurrent requests to both endpoints (4 ms)
+      ✓ should handle very long position names (2 ms)
+      ✓ should return consistent data types (3 ms)
+
+PASS backend src/endpoints/__tests__/auth.test.ts
+  Auth Endpoints Integration Tests
+    POST /api/auth/register
+      ✓ should register a new user successfully (116 ms)
+      ✓ should return 400 if user already exists (4 ms)
+      ✓ should return 400 for invalid input data (missing required fields) (2 ms)
+      ✓ should return 400 for invalid email format (5 ms)
+      ✓ should return 400 for weak password (6 ms)
+      ✓ should return 400 for invalid role (17 ms)
+      ✓ should return 500 if database operation fails (37 ms)
+    POST /api/auth/login
+      ✓ should login successfully with valid credentials (2 ms)
+      ✓ should return 401 for non-existent email (10 ms)
+      ✓ should return 401 for incorrect password (3 ms)
+      ✓ should return 400 for missing required fields (1 ms)
+      ✓ should return 400 for invalid email format (1 ms)
+      ✓ should return 500 if database operation fails (4 ms)
+      ✓ should update lastLoginAt timestamp on successful login (15 ms)
+    POST /api/auth/logout
+      ✓ should logout successfully (2 ms)
+      ✓ should logout without authentication (stateless) (1 ms)
+    Edge Cases and Security
+      ✓ should not expose password hash in registration response (2 ms)
+      ✓ should not expose password hash in login response (2 ms)
+      ✓ should handle SQL injection attempts in email field (2 ms)
+      ✓ should handle very long input strings gracefully (2 ms)
+
+PASS backend src/endpoints/__tests__/candidateHistory.test.ts
+  Candidate History Endpoints Integration Tests
+    GET /api/candidates/:candidateId/history
+      ✓ should return candidate history successfully (95 ms)
+      ✓ should return empty array for candidate with no history (3 ms)
+      ✓ should return 404 for non-existent candidate (54 ms)
+      ✓ should return 400 for invalid candidate ID (3 ms)
+      ✓ should return 401 without authentication (1 ms)
+      ✓ should return 401 with invalid token (14 ms)
+      ✓ should return 500 if database operation fails (2 ms)
+      ✓ should handle history items without associated meetings (4 ms)
+    POST /api/candidates/:candidateId/history
+      ✓ should create candidate history successfully (9 ms)
+      ✓ should create history without meetingId (general notes) (10 ms)
+      ✓ should return 404 for non-existent candidate (2 ms)
+      ✓ should return 400 for invalid candidate ID (1 ms)
+      ✓ should return 400 for missing feedback (1 ms)
+      ✓ should return 400 for empty feedback (6 ms)
+      ✓ should return 400 for invalid meetingId type (12 ms)
+      ✓ should return 401 without authentication (3 ms)
+      ✓ should return 401 with invalid token (2 ms)
+      ✓ should return 500 if database operation fails (3 ms)
+      ✓ should allow multiple history entries for the same candidate (3 ms)
+    Edge Cases
+      ✓ should handle very long feedback text (2 ms)
+      ✓ should handle feedback with special characters and newlines (1 ms)
+      ✓ should work for different user roles (2 ms)
+      ✓ should maintain chronological order when fetching history (2 ms)
+
+PASS backend src/collections/__tests__/candidateHistory.test.ts
+  Candidate History Collection
+    createCandidateHistory
+      ✓ should create candidate history with meeting reference (1 ms)
+      ✓ should create candidate history without meeting reference
+      ✓ should handle empty feedback string
+      ✓ should handle long feedback text
+      ✓ should handle database error (56 ms)
+    findCandidateHistory
+      ✓ should find all history records for a candidate (1 ms)
+      ✓ should return empty array when candidate has no history
+      ✓ should return history records ordered by recordedAt descending
+      ✓ should include meeting details when available
+      ✓ should handle null meeting when no meeting associated
+      ✓ should handle database error
+      ✓ should handle candidate ID as zero
+      ✓ should handle negative candidate ID
+
+PASS backend src/utilities/__tests__/prisma.test.ts
+  Prisma Singleton
+    ✓ should create a new PrismaClient instance (12 ms)
+    ✓ should configure PrismaClient with development logging when NODE_ENV is development
+    ✓ should configure PrismaClient with error-only logging when NODE_ENV is production
+    ✓ should configure PrismaClient with error-only logging when NODE_ENV is test (1 ms)
+    ✓ should configure PrismaClient with error-only logging when NODE_ENV is not set
+    ✓ should reuse existing global prisma instance in non-production
+    ✓ should store prisma instance in global when NODE_ENV is development
+    ✓ should store prisma instance in global when NODE_ENV is test (1 ms)
+    ✓ should not store prisma instance in global when NODE_ENV is production
+    ✓ should export prisma as default export
+    ✓ should export prisma as named export
+    ✓ should create singleton pattern - same instance on multiple imports in development
+
+PASS backend src/endpoints/__tests__/candidates.test.ts
+  Candidates Endpoints Integration Tests
+    GET /api/candidates
+      ✓ should return paginated candidates list successfully (24 ms)
+      ✓ should filter candidates by search query (138 ms)
+      ✓ should filter candidates by status (3 ms)
+      ✓ should return empty array for no candidates (1 ms)
+      ✓ should return 401 without authentication (4 ms)
+      ✓ should return 500 if database operation fails (4 ms)
+    POST /api/candidates
+      ✓ should create a new candidate successfully (15 ms)
+      ✓ should return 400 if candidate email already exists (2 ms)
+      ✓ should return 400 for missing required fields (4 ms)
+      ✓ should return 400 for invalid email format (4 ms)
+      ✓ should return 400 for invalid status (3 ms)
+      ✓ should return 401 without authentication (17 ms)
+      ✓ should return 500 if database operation fails (13 ms)
+    GET /api/candidates/:id
+      ✓ should return candidate by ID successfully (6 ms)
+      ✓ should return 404 for non-existent candidate (1 ms)
+      ✓ should return 400 for invalid candidate ID format (1 ms)
+      ✓ should return 401 without authentication (1 ms)
+      ✓ should return 500 if database operation fails (4 ms)
+    PUT /api/candidates/:id
+      ✓ should update candidate successfully (3 ms)
+      ✓ should return 404 for non-existent candidate (2 ms)
+      ✓ should return 400 for invalid candidate ID (4 ms)
+      ✓ should return 400 for invalid update data (8 ms)
+      ✓ should return 401 without authentication (17 ms)
+      ✓ should return 500 if database operation fails (10 ms)
+    DELETE /api/candidates/:id
+      ✓ should delete candidate successfully (2 ms)
+      ✓ should return 404 for non-existent candidate (2 ms)
+      ✓ should return 400 for invalid candidate ID (2 ms)
+      ✓ should return 401 without authentication (9 ms)
+      ✓ should return 500 if database operation fails (3 ms)
+    Edge Cases
+      ✓ should handle candidates with missing optional fields (2 ms)
+      ✓ should handle search with special characters (1 ms)
+      ✓ should handle concurrent candidate creation attempts (5 ms)
+
+PASS backend src/utilities/__tests__/jwt.test.ts
+  JWT Utilities
+    generateToken
+      ✓ should generate a valid JWT token (1 ms)
+      ✓ should include payload data in token
+    verifyToken
+      ✓ should verify and decode a valid token
+      ✓ should throw error for invalid token (4 ms)
+      ✓ should throw error for malformed token
+      ✓ should handle TokenExpiredError by name property (1 ms)
+      ✓ should handle JsonWebTokenError by name property
+      ✓ should handle generic errors with fallback message (1 ms)
+      ✓ should handle non-Error objects thrown by verify
+      ✓ should handle null or undefined errors
+      ✓ should handle error objects without name property
+
+PASS backend src/utilities/__tests__/auth.test.ts
+  Auth Utilities
+    hashPassword
+      ✓ should hash a password
+      ✓ should generate different hashes for the same password
+    comparePassword
+      ✓ should return true for matching password
+      ✓ should return false for non-matching password
+
+PASS backend src/endpoints/__tests__/participants.test.ts
+  Participants Endpoints Integration Tests
+    POST /api/meetings/:meetingId/participants
+      ✓ should add participant to meeting successfully (143 ms)
+      ✓ should return 404 if meeting does not exist (6 ms)
+      ✓ should return 400 for invalid meeting ID (2 ms)
+      ✓ should return 400 for missing userId (1 ms)
+      ✓ should return 400 for invalid userId type (2 ms)
+      ✓ should return 400 if participant already exists (1 ms)
+      ✓ should return 401 without authentication (34 ms)
+      ✓ should return 401 with invalid token (1 ms)
+      ✓ should return 500 if database operation fails (1 ms)
+      ✓ should allow multiple participants for the same meeting (42 ms)
+    DELETE /api/meetings/:meetingId/participants/:userId
+      ✓ should remove participant from meeting successfully (1 ms)
+      ✓ should return 404 if participant not found (4 ms)
+      ✓ should return 400 for invalid meeting ID (2 ms)
+      ✓ should return 400 for invalid user ID (2 ms)
+      ✓ should return 400 for both invalid IDs (3 ms)
+      ✓ should return 401 without authentication (1 ms)
+      ✓ should return 401 with invalid token (2 ms)
+      ✓ should return 500 if database operation fails (3 ms)
+    Edge Cases
+      ✓ should handle adding and removing the same participant (3 ms)
+      ✓ should handle concurrent participant additions (5 ms)
+      ✓ should handle negative user IDs gracefully (3 ms)
+      ✓ should handle zero as user ID (1 ms)
+      ✓ should handle very large user IDs (2 ms)
+      ✓ should work for different user roles (4 ms)
+
+FAIL backend src/endpoints/__tests__/meetings.test.ts
+  Meetings Endpoints Integration Tests
+    GET /api/meetings
+      ✓ should return paginated meetings list successfully (182 ms)
+      ✓ should return empty array for no meetings (2 ms)
+      ✓ should handle pagination correctly (2 ms)
+      ✓ should return 401 without authentication token (4 ms)
+      ✓ should return 401 with invalid token (3 ms)
+      ✓ should return 400 for invalid pagination parameters (12 ms)
+      ✓ should return 500 if database operation fails (16 ms)
+    POST /api/meetings
+      ✓ should create a new meeting successfully (17 ms)
+      ✓ should return 401 without authentication (5 ms)
+      ✓ should return 400 for missing required fields (1 ms)
+      ✓ should return 400 for invalid meeting type (2 ms)
+      ✕ should return 400 for invalid date range (end before start) (24 ms)
+      ✓ should return 500 if database operation fails (2 ms)
+    GET /api/meetings/:id
+      ✓ should return meeting by ID successfully (3 ms)
+      ✓ should return 404 for non-existent meeting (3 ms)
+      ✓ should return 400 for invalid meeting ID format (2 ms)
+      ✓ should return 401 without authentication (3 ms)
+      ✓ should return 500 if database operation fails (3 ms)
+    PUT /api/meetings/:id
+      ✓ should update meeting successfully (4 ms)
+      ✓ should return 404 for non-existent meeting (3 ms)
+      ✓ should return 400 for invalid meeting ID (3 ms)
+      ✓ should return 400 for invalid update data (2 ms)
+      ✓ should return 401 without authentication (1 ms)
+      ✓ should return 500 if database operation fails (1 ms)
+    DELETE /api/meetings/:id
+      ✓ should soft delete meeting successfully (2 ms)
+      ✓ should return 404 for non-existent meeting (4 ms)
+      ✓ should return 400 for invalid meeting ID (4 ms)
+      ✓ should return 401 without authentication (2 ms)
+      ✓ should return 500 if database operation fails (1 ms)
+    Edge Cases
+      ✓ should handle concurrent requests correctly (4 ms)
+      ✓ should handle large page sizes (2 ms)
+      ✓ should handle special characters in meeting title (2 ms)
+      ✓ should handle meetings with multiple participants (GET /) (3 ms)
+      ✓ should handle meetings with multiple participants (POST /) (3 ms)
+      ✓ should handle meetings with multiple participants (GET /:id) (2 ms)
+      ✓ should handle meetings with multiple participants (PUT /:id) (2 ms)
+
+  ● Meetings Endpoints Integration Tests › POST /api/meetings › should return 400 for invalid date range (end before start)
+
+    expected "Content-Type" matching /json/, got "text/html"
+
+      255 |         .set('Authorization', `Bearer ${authToken}`)
+      256 |         .send(invalidData)
+    > 257 |         .expect('Content-Type', /json/)
+          |          ^
+      258 |         .expect(400);
+      259 |
+      260 |       expect(response.body).toMatchObject({
+
+      at Object.<anonymous> (src/endpoints/__tests__/meetings.test.ts:257:10)
+      ----
+      at Test._assertHeader (../../node_modules/.pnpm/supertest@7.1.4/node_modules/supertest/lib/test.js:289:16)
+      at ../../node_modules/.pnpm/supertest@7.1.4/node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../../node_modules/.pnpm/supertest@7.1.4/node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../../node_modules/.pnpm/supertest@7.1.4/node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../../node_modules/.pnpm/supertest@7.1.4/node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../../node_modules/.pnpm/supertest@7.1.4/node_modules/supertest/lib/test.js:152:11)
+
+TN:
+SF:src/collections/candidateHistory.ts
+FN:4,createCandidateHistory
+FN:26,findCandidateHistory
+FNF:2
+FNH:2
+FNDA:15,createCandidateHistory
+FNDA:13,findCandidateHistory
+DA:1,7
+DA:4,7
+DA:8,15
+DA:26,7
+DA:27,13
+LF:5
+LH:5
+BRF:0
+BRH:0
+end_of_record
+TN:
+SF:src/collections/candidates.ts
+FN:4,createCandidate
+FN:18,findCandidates
+FN:61,findCandidateById
+FN:75,updateCandidate
+FN:90,deleteCandidate
+FN:96,findCandidateByEmail
+FNF:6
+FNH:6
+FNDA:8,createCandidate
+FNDA:14,findCandidates
+FNDA:29,findCandidateById
+FNDA:5,updateCandidate
+FNDA:4,deleteCandidate
+FNDA:9,findCandidateByEmail
+DA:1,7
+DA:4,7
+DA:5,8
+DA:18,7
+DA:24,14
+DA:27,14
+DA:29,14
+DA:30,5
+DA:36,14
+DA:37,3
+DA:40,14
+DA:58,13
+DA:61,7
+DA:62,29
+DA:75,7
+DA:76,5
+DA:90,7
+DA:91,4
+DA:96,7
+DA:97,9
+LF:20
+LH:20
+BRDA:19,0,0,2
+BRDA:20,1,0,2
+BRDA:29,2,0,5
+BRDA:29,2,1,9
+BRDA:36,3,0,3
+BRDA:36,3,1,11
+BRF:6
+BRH:6
+end_of_record
+TN:
+SF:src/collections/meetings.ts
+FN:4,createMeeting
+FN:15,(anonymous_2)
+FN:51,findMeetings
+FN:96,findMeetingById
+FN:129,updateMeeting
+FN:171,softDeleteMeeting
+FN:178,hardDeleteMeeting
+FNF:7
+FNH:7
+FNDA:11,createMeeting
+FNDA:7,(anonymous_2)
+FNDA:17,findMeetings
+FNDA:30,findMeetingById
+FNDA:7,updateMeeting
+FNDA:5,softDeleteMeeting
+FNDA:3,hardDeleteMeeting
+DA:1,7
+DA:4,7
+DA:5,11
+DA:7,11
+DA:15,7
+DA:51,7
+DA:52,17
+DA:54,17
+DA:56,17
+DA:93,16
+DA:96,7
+DA:97,30
+DA:129,7
+DA:130,7
+DA:132,7
+DA:168,5
+DA:171,7
+DA:172,5
+DA:178,7
+DA:179,3
+LF:20
+LH:20
+BRDA:13,0,0,4
+BRDA:13,0,1,7
+BRDA:51,1,0,15
+BRDA:54,2,0,1
+BRDA:54,2,1,16
+BRDA:136,3,0,7
+BRDA:136,3,1,1
+BRDA:137,4,0,7
+BRDA:137,4,1,1
+BRF:9
+BRH:9
+end_of_record
+TN:
+SF:src/collections/participants.ts
+FN:3,addParticipant
+FN:21,removeParticipant
+FN:32,findParticipantsByMeetingId
+FNF:3
+FNH:3
+FNDA:25,addParticipant
+FNDA:11,removeParticipant
+FNDA:8,findParticipantsByMeetingId
+DA:1,7
+DA:3,7
+DA:4,25
+DA:21,7
+DA:22,11
+DA:32,7
+DA:33,8
+LF:7
+LH:7
+BRF:0
+BRH:0
+end_of_record
+TN:
+SF:src/collections/positions.ts
+FN:3,findAllPositions
+FN:9,findAllAppliedPositions
+FN:15,findPositionById
+FN:21,findAppliedPositionById
+FNF:4
+FNH:4
+FNDA:19,findAllPositions
+FNDA:14,findAllAppliedPositions
+FNDA:6,findPositionById
+FNDA:9,findAppliedPositionById
+DA:1,7
+DA:3,7
+DA:4,19
+DA:9,7
+DA:10,14
+DA:15,7
+DA:16,6
+DA:21,7
+DA:22,9
+LF:9
+LH:9
+BRF:0
+BRH:0
+end_of_record
+TN:
+SF:src/collections/users.ts
+FN:5,createUser
+FN:26,findUserByEmail
+FN:32,findUserById
+FN:51,updateUserLastLogin
+FNF:4
+FNH:4
+FNDA:12,createUser
+FNDA:16,findUserByEmail
+FNDA:7,findUserById
+FNDA:12,updateUserLastLogin
+DA:1,7
+DA:2,7
+DA:5,7
+DA:6,12
+DA:8,12
+DA:26,7
+DA:27,16
+DA:32,7
+DA:33,7
+DA:51,7
+DA:52,12
+LF:11
+LH:11
+BRF:0
+BRH:0
+end_of_record
+TN:
+SF:src/endpoints/auth.ts
+FN:13,(anonymous_0)
+FN:66,(anonymous_1)
+FN:128,(anonymous_2)
+FNF:3
+FNH:3
+FNDA:9,(anonymous_0)
+FNDA:9,(anonymous_1)
+FNDA:2,(anonymous_2)
+DA:1,6
+DA:3,6
+DA:4,6
+DA:5,6
+DA:6,6
+DA:7,6
+DA:10,6
+DA:13,6
+DA:14,9
+DA:15,9
+DA:18,4
+DA:19,4
+DA:20,1
+DA:24,1
+DA:27,3
+DA:29,2
+DA:35,2
+DA:46,2
+DA:48,6
+DA:49,5
+DA:54,5
+DA:57,1
+DA:58,1
+DA:66,6
+DA:67,9
+DA:68,9
+DA:70,6
+DA:71,5
+DA:72,1
+DA:76,1
+DA:79,4
+DA:80,4
+DA:81,1
+DA:85,1
+DA:89,3
+DA:91,3
+DA:97,3
+DA:108,3
+DA:110,4
+DA:111,3
+DA:116,3
+DA:119,1
+DA:120,1
+DA:128,6
+DA:131,2
+DA:136,6
+LF:46
+LH:46
+BRDA:19,0,0,1
+BRDA:19,0,1,3
+BRDA:48,1,0,5
+BRDA:48,1,1,1
+BRDA:71,2,0,1
+BRDA:71,2,1,4
+BRDA:80,3,0,1
+BRDA:80,3,1,3
+BRDA:110,4,0,3
+BRDA:110,4,1,1
+BRF:10
+BRH:10
+end_of_record
+TN:
+SF:src/endpoints/candidateHistory.ts
+FN:16,(anonymous_0)
+FN:40,(anonymous_1)
+FN:66,(anonymous_2)
+FNF:3
+FNH:3
+FNDA:7,(anonymous_0)
+FNDA:6,(anonymous_1)
+FNDA:15,(anonymous_2)
+DA:1,6
+DA:3,6
+DA:4,6
+DA:5,6
+DA:6,6
+DA:7,6
+DA:10,6
+DA:13,6
+DA:16,6
+DA:17,7
+DA:18,7
+DA:20,7
+DA:21,1
+DA:25,1
+DA:29,6
+DA:30,6
+DA:31,1
+DA:35,1
+DA:38,5
+DA:40,6
+DA:55,4
+DA:57,1
+DA:58,1
+DA:66,6
+DA:67,15
+DA:68,15
+DA:70,15
+DA:71,1
+DA:75,1
+DA:78,14
+DA:81,11
+DA:82,11
+DA:83,1
+DA:87,1
+DA:90,10
+DA:92,9
+DA:107,9
+DA:109,4
+DA:110,3
+DA:115,3
+DA:118,1
+DA:119,1
+DA:126,6
+LF:43
+LH:43
+BRDA:20,0,0,1
+BRDA:20,0,1,6
+BRDA:30,1,0,1
+BRDA:30,1,1,5
+BRDA:46,2,0,5
+BRDA:46,2,1,1
+BRDA:70,3,0,1
+BRDA:70,3,1,14
+BRDA:82,4,0,1
+BRDA:82,4,1,10
+BRDA:98,5,0,8
+BRDA:98,5,1,1
+BRDA:109,6,0,3
+BRDA:109,6,1,1
+BRF:14
+BRH:14
+end_of_record
+TN:
+SF:src/endpoints/candidates.ts
+FN:27,(anonymous_0)
+FN:36,(anonymous_1)
+FN:66,(anonymous_2)
+FN:114,(anonymous_3)
+FN:159,(anonymous_4)
+FN:216,(anonymous_5)
+FNF:6
+FNH:6
+FNDA:6,(anonymous_0)
+FNDA:4,(anonymous_1)
+FNDA:9,(anonymous_2)
+FNDA:5,(anonymous_3)
+FNDA:5,(anonymous_4)
+FNDA:4,(anonymous_5)
+DA:1,6
+DA:3,6
+DA:4,6
+DA:10,6
+DA:18,6
+DA:21,6
+DA:24,6
+DA:27,6
+DA:28,6
+DA:29,6
+DA:30,6
+DA:31,6
+DA:33,6
+DA:35,5
+DA:36,4
+DA:55,5
+DA:57,1
+DA:58,1
+DA:66,6
+DA:67,9
+DA:68,9
+DA:71,6
+DA:72,6
+DA:73,1
+DA:77,1
+DA:80,5
+DA:82,4
+DA:94,4
+DA:96,4
+DA:97,3
+DA:102,3
+DA:105,1
+DA:106,1
+DA:114,6
+DA:115,5
+DA:116,5
+DA:118,5
+DA:119,1
+DA:123,1
+DA:126,4
+DA:128,3
+DA:129,1
+DA:133,1
+DA:136,2
+DA:148,2
+DA:150,1
+DA:151,1
+DA:159,6
+DA:160,5
+DA:161,5
+DA:163,5
+DA:164,1
+DA:168,1
+DA:171,4
+DA:173,3
+DA:174,3
+DA:175,1
+DA:179,1
+DA:182,2
+DA:184,1
+DA:196,1
+DA:198,2
+DA:199,1
+DA:204,1
+DA:207,1
+DA:208,1
+DA:216,6
+DA:217,4
+DA:218,4
+DA:220,4
+DA:221,1
+DA:225,1
+DA:228,3
+DA:229,3
+DA:230,1
+DA:234,1
+DA:237,2
+DA:239,1
+DA:243,1
+DA:244,1
+DA:251,6
+LF:81
+LH:81
+BRDA:72,0,0,1
+BRDA:72,0,1,5
+BRDA:96,1,0,3
+BRDA:96,1,1,1
+BRDA:118,2,0,1
+BRDA:118,2,1,4
+BRDA:128,3,0,1
+BRDA:128,3,1,2
+BRDA:163,4,0,1
+BRDA:163,4,1,4
+BRDA:174,5,0,1
+BRDA:174,5,1,2
+BRDA:198,6,0,1
+BRDA:198,6,1,1
+BRDA:220,7,0,1
+BRDA:220,7,1,3
+BRDA:229,8,0,1
+BRDA:229,8,1,2
+BRF:18
+BRH:18
+end_of_record
+TN:
+SF:src/endpoints/meetings.ts
+FN:26,(anonymous_0)
+FN:33,(anonymous_1)
+FN:49,(anonymous_2)
+FN:79,(anonymous_3)
+FN:102,(anonymous_4)
+FN:125,(anonymous_5)
+FN:163,(anonymous_6)
+FN:177,(anonymous_7)
+FN:218,(anonymous_8)
+FN:241,(anonymous_9)
+FNF:10
+FNH:10
+FNDA:12,(anonymous_0)
+FNDA:9,(anonymous_1)
+FNDA:2,(anonymous_2)
+FNDA:6,(anonymous_3)
+FNDA:1,(anonymous_4)
+FNDA:5,(anonymous_5)
+FNDA:2,(anonymous_6)
+FNDA:6,(anonymous_7)
+FNDA:1,(anonymous_8)
+FNDA:4,(anonymous_9)
+DA:1,6
+DA:3,6
+DA:4,6
+DA:10,6
+DA:17,6
+DA:20,6
+DA:23,6
+DA:26,6
+DA:27,12
+DA:28,12
+DA:30,11
+DA:32,10
+DA:33,9
+DA:49,2
+DA:59,10
+DA:61,2
+DA:62,1
+DA:67,1
+DA:70,1
+DA:71,1
+DA:79,6
+DA:80,6
+DA:81,6
+DA:82,4
+DA:84,4
+DA:86,3
+DA:102,1
+DA:105,3
+DA:107,3
+DA:108,2
+DA:113,2
+DA:116,1
+DA:117,1
+DA:125,6
+DA:126,5
+DA:127,5
+DA:129,5
+DA:130,1
+DA:134,1
+DA:137,4
+DA:139,3
+DA:140,1
+DA:144,1
+DA:147,2
+DA:163,2
+DA:166,2
+DA:168,1
+DA:169,1
+DA:177,6
+DA:178,6
+DA:179,6
+DA:181,6
+DA:182,1
+DA:186,1
+DA:189,5
+DA:191,4
+DA:192,4
+DA:193,1
+DA:197,1
+DA:200,3
+DA:202,2
+DA:218,1
+DA:221,2
+DA:223,2
+DA:224,1
+DA:229,1
+DA:232,1
+DA:233,1
+DA:241,6
+DA:242,4
+DA:243,4
+DA:245,4
+DA:246,1
+DA:250,1
+DA:253,3
+DA:254,3
+DA:255,1
+DA:259,1
+DA:262,2
+DA:264,1
+DA:268,1
+DA:269,1
+DA:276,6
+LF:83
+LH:83
+BRDA:46,0,0,9
+BRDA:46,0,1,9
+BRDA:61,1,0,1
+BRDA:61,1,1,1
+BRDA:99,2,0,3
+BRDA:99,2,1,3
+BRDA:107,3,0,2
+BRDA:107,3,1,1
+BRDA:129,4,0,1
+BRDA:129,4,1,4
+BRDA:139,5,0,1
+BRDA:139,5,1,2
+BRDA:160,6,0,2
+BRDA:160,6,1,2
+BRDA:181,7,0,1
+BRDA:181,7,1,5
+BRDA:192,8,0,1
+BRDA:192,8,1,3
+BRDA:215,9,0,2
+BRDA:215,9,1,2
+BRDA:223,10,0,1
+BRDA:223,10,1,1
+BRDA:245,11,0,1
+BRDA:245,11,1,3
+BRDA:254,12,0,1
+BRDA:254,12,1,2
+BRF:26
+BRH:26
+end_of_record
+TN:
+SF:src/endpoints/participants.ts
+FN:15,(anonymous_0)
+FN:74,(anonymous_1)
+FNF:2
+FNH:2
+FNDA:21,(anonymous_0)
+FNDA:7,(anonymous_1)
+DA:1,6
+DA:3,6
+DA:4,6
+DA:5,6
+DA:6,6
+DA:7,6
+DA:9,6
+DA:12,6
+DA:15,6
+DA:16,21
+DA:17,21
+DA:19,21
+DA:20,1
+DA:24,1
+DA:27,20
+DA:30,16
+DA:31,16
+DA:32,1
+DA:36,1
+DA:39,15
+DA:41,13
+DA:47,6
+DA:48,4
+DA:53,4
+DA:57,2
+DA:58,1
+DA:62,1
+DA:65,1
+DA:66,1
+DA:74,6
+DA:75,7
+DA:76,7
+DA:77,7
+DA:79,7
+DA:80,3
+DA:84,3
+DA:87,4
+DA:89,2
+DA:94,2
+DA:95,1
+DA:99,1
+DA:102,1
+DA:103,1
+DA:110,6
+LF:44
+LH:44
+BRDA:19,0,0,1
+BRDA:19,0,1,20
+BRDA:31,1,0,1
+BRDA:31,1,1,15
+BRDA:47,2,0,4
+BRDA:47,2,1,2
+BRDA:57,3,0,1
+BRDA:57,3,1,1
+BRDA:57,4,0,2
+BRDA:57,4,1,2
+BRDA:57,4,2,2
+BRDA:57,4,3,1
+BRDA:79,5,0,3
+BRDA:79,5,1,4
+BRDA:79,6,0,7
+BRDA:79,6,1,5
+BRDA:94,7,0,1
+BRDA:94,7,1,1
+BRDA:94,8,0,2
+BRDA:94,8,1,2
+BRDA:94,8,2,2
+BRDA:94,8,3,1
+BRF:22
+BRH:22
+end_of_record
+TN:
+SF:src/endpoints/positions.ts
+FN:13,(anonymous_0)
+FN:17,(anonymous_1)
+FN:33,(anonymous_2)
+FN:37,(anonymous_3)
+FNF:4
+FNH:4
+FNDA:12,(anonymous_0)
+FNDA:13,(anonymous_1)
+FNDA:8,(anonymous_2)
+FNDA:7,(anonymous_3)
+DA:1,6
+DA:3,6
+DA:4,6
+DA:7,6
+DA:10,6
+DA:13,6
+DA:14,12
+DA:15,12
+DA:17,13
+DA:22,11
+DA:24,1
+DA:25,1
+DA:33,6
+DA:34,8
+DA:35,8
+DA:37,7
+DA:42,7
+DA:44,1
+DA:45,1
+DA:52,6
+LF:20
+LH:20
+BRF:0
+BRH:0
+end_of_record
+TN:
+SF:src/utilities/auth.ts
+FN:5,hashPassword
+FN:9,comparePassword
+FNF:2
+FNH:2
+FNDA:8,hashPassword
+FNDA:2,comparePassword
+DA:1,7
+DA:3,7
+DA:5,7
+DA:6,8
+DA:9,7
+DA:10,2
+LF:6
+LH:6
+BRF:0
+BRH:0
+end_of_record
+TN:
+SF:src/utilities/jwt.ts
+FN:7,generateToken
+FN:13,verifyToken
+FNF:2
+FNH:2
+FNDA:25,generateToken
+FNDA:199,verifyToken
+DA:1,8
+DA:4,8
+DA:5,8
+DA:7,8
+DA:8,25
+DA:13,8
+DA:14,199
+DA:15,199
+DA:16,184
+DA:19,15
+DA:20,12
+DA:21,1
+DA:23,11
+DA:24,10
+DA:27,4
+LF:15
+LH:15
+BRDA:4,0,0,8
+BRDA:4,0,1,0
+BRDA:19,1,0,12
+BRDA:19,1,1,3
+BRDA:19,2,0,15
+BRDA:19,2,1,14
+BRDA:19,2,2,13
+BRDA:20,3,0,1
+BRDA:20,3,1,11
+BRDA:23,4,0,10
+BRDA:23,4,1,1
+BRF:11
+BRH:10
+end_of_record
+TN:
+SF:src/utilities/middleware.ts
+FN:14,authMiddleware
+FN:34,errorHandler
+FNF:2
+FNH:2
+FNDA:213,authMiddleware
+FNDA:11,errorHandler
+DA:2,7
+DA:14,7
+DA:15,213
+DA:16,213
+DA:18,213
+DA:19,18
+DA:20,18
+DA:23,195
+DA:25,195
+DA:26,185
+DA:27,185
+DA:29,10
+DA:30,10
+DA:34,7
+DA:35,11
+DA:37,11
+DA:38,11
+DA:40,11
+LF:18
+LH:18
+BRDA:18,0,0,18
+BRDA:18,0,1,195
+BRDA:23,1,0,194
+BRDA:23,1,1,1
+BRDA:29,2,0,9
+BRDA:29,2,1,1
+BRDA:37,3,0,4
+BRDA:37,3,1,7
+BRDA:38,4,0,11
+BRDA:38,4,1,1
+BRDA:41,5,0,11
+BRDA:41,5,1,0
+BRDA:43,6,0,11
+BRDA:43,6,1,1
+BRF:14
+BRH:13
+end_of_record
+TN:
+SF:src/utilities/prisma.ts
+FN:3,(anonymous_0)
+FNF:1
+FNH:1
+FNDA:11,(anonymous_0)
+DA:1,12
+DA:3,12
+DA:4,11
+DA:14,12
+DA:16,12
+DA:18,12
+LF:6
+LH:6
+BRDA:5,0,0,3
+BRDA:5,0,1,8
+BRDA:14,1,0,12
+BRDA:14,1,1,11
+BRDA:16,2,0,10
+BRDA:16,2,1,2
+BRF:6
+BRH:6
+end_of_record
+TN:
+SF:src/utilities/validation.ts
+FN:30,(anonymous_0)
+FN:65,validateData
+FNF:2
+FNH:2
+FNDA:5,(anonymous_0)
+FNDA:108,validateData
+DA:1,7
+DA:4,7
+DA:12,7
+DA:18,7
+DA:30,5
+DA:35,7
+DA:37,7
+DA:43,7
+DA:51,7
+DA:54,7
+DA:59,7
+DA:65,7
+DA:66,108
+LF:13
+LH:13
+BRF:0
+BRH:0
+end_of_record
+Test Suites: 1 failed, 16 passed, 17 total
+Tests:       1 failed, 345 passed, 346 total
+Snapshots:   0 total
+Time:        2.992 s
+Ran all test suites.

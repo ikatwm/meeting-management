@@ -128,7 +128,7 @@ jobs:
         uses: codecov/codecov-action@v4
         if: always()
         with:
-          files: ./apps/backend/coverage/lcov.info
+          files: ./coverage/apps/backend/lcov.info
           flags: backend
           fail_ci_if_error: false
           token: ${{ secrets.CODECOV_TOKEN }}
